@@ -1,7 +1,6 @@
 
 from core.game import Game
 import pygame
-from core.mechanics import pygame
 
 
 def main():
@@ -9,7 +8,7 @@ def main():
 
     # Инициализация PyGame:
     pygame.init()
-    clock = pygame.Clock()
+    clock = pygame.time.Clock()
 
     # Инициализация Game
     game = Game()

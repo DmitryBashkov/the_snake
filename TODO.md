@@ -3,8 +3,8 @@
 ## Блокеры запуска
 
 - [ ] Исправить синтаксические ошибки во всех модулях. В `core/mechanics.py`, `core/renderer.py`, `objects/snake.py` и `objects/game.py` не закрыты скобки импортов и/или выражений; в `core/renderer.py` не закрыты вызовы `pygame.draw.rect`. Пока эти ошибки есть, импорт `the_snake` завершается `SyntaxError`.
-- [ ] Устранить конфликт импортов в `the_snake.py`: оставить один импорт `pygame` и удалить `from core.mechanics import pygame`.
-- [ ] Исправить создание часов в `core/game.py`: использовать `pygame.time.Clock()`, а не `pygame.Clock()`, которого в API pygame нет.
+- [x] Устранить конфликт импортов в `the_snake.py`: оставить один импорт `pygame` и удалить `from core.mechanics import pygame`.
+- [x] Исправить создание часов в `core/game.py`: использовать `pygame.time.Clock()`, а не `pygame.Clock()`, которого в API pygame нет.
 - [ ] Инициализировать pygame до создания `Renderer`. Сейчас `Game()` создаёт `Renderer`, а тот вызывает `pygame.display.set_mode`; это допустимо только после `pygame.init()`. Сохранить такой порядок и не создавать `Game` при импорте модуля.
 
 ## Точка входа и основной цикл
