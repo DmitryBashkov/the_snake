@@ -56,5 +56,3 @@ def handle_keys(snake: Snake):
                 snake.update_direction(LEFT)
             elif event.key == pygame.K_RIGHT and snake.direction != LEFT:
                 snake.update_direction(RIGHT)
-
-
