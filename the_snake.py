@@ -1,5 +1,6 @@
 
 from core.game import Game
+from core.renderer import Renderer
 import pygame
 
 
@@ -8,15 +9,26 @@ def main():
 
     # Инициализация PyGame:
     pygame.init()
-    clock = pygame.time.Clock()
 
     # Инициализация Game
     game = Game()
 
-    while True:
-        clock.tick(20)
-        game.turn()
-        pygame.display.update()
+    # Инициализация рендера
+    renderer = Renderer()
+
+    # Запуск игры
+    game.run()
+
+    while game.running:
+
+        # Если игра возвращает False,
+        # то завершаем текущий цикл
+        # с game.running = False
+        if not game.tick():
+            continue
+
+        # Обновляем графику
+        renderer.update
 
 
 if __name__ == '__main__':

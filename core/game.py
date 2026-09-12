@@ -17,39 +17,62 @@ class Game():
         self._running = False
         self._gave_over_on_interception: bool
         self.speed = Speed()
-        self.clock = pygame.Clock()
+        self.clock = pygame.time.Clock()
         self.renderer = Renderer()
+        self.tick()
 
     def run(self):
+        ''' Устанавливаем _running = True'''
         self._running = True
 
     def stop(self):
+        ''' Устанавливаем _running = False'''
         self._running = False
 
-    def turn(self) -> bool:
+    @property
+    def running(self):
+        return self._running
+
+    def tick(self) -> bool:
 
         self.clock.tick(self.speed.value)
 
-        # Определяем, есть ли столкновения змейки с каким-либо объектом
-        interception_object = self._has_interception()
-
-        if interception_object:
-            if interception_object.is_game_over_on_interception:
-                self._game_over()
-                self.stop()
-                return False
-            elif isinstance(interception_object, Apple):
-                wall = Wall(self._snake.eat(interception_object))
-                if wall:
-                    self.add_game_objects_to_list(wall)
-
-            self.remove_object(interception_object)
-
-        self.remove_game_objects_from_list()
-
+        # Для масштабируемости:
+        # все объекты, которые должны двигаться, делают шаг
+        # В нашем случае это только замейка и все
         for object in self._game_objects:
             object.move()
             self.renderer.draw(object.positions, object.body_color)
+
+        # Определяем, есть ли столкновения змейки
+        # с каким-либо объектом после движения
+        interception_object = self._has_interception()
+
+        # Если есть столкновение
+        if interception_object:
+
+            # Есть ли столкновение с объектами,
+            # после которых игра заканчивается
+            if interception_object.is_game_over_on_interception:
+
+                # Заканчиваем игру, останавливаем
+                self._game_over()
+                self.stop()
+                return False
+
+            # В остальных случаях проверяем, с яблоком ли столкновение
+            elif isinstance(interception_object, Apple):
+
+                wall = Wall(self._snake.eat(interception_object))
+
+                if wall:
+                    self.add_game_objects_to_list(wall)
+
+            # Добавляем объект в список на удаление
+            self.remove_object(interception_object)
+
+        # Удаляем все объекты из списка на удаление
+        self.remove_game_objects_from_list()
 
         return True
 

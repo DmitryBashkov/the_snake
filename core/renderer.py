@@ -50,3 +50,6 @@ class Renderer():
         '''Рисует игровой объект'''
         for position in positions:
             self._draw_element(position, color)
+
+    def update(self):
+        pygame.display.update()
