@@ -19,6 +19,7 @@ class Game():
         self.speed = Speed()
         self.clock = pygame.time.Clock()
         self.renderer = Renderer()
+        self._game_objects.add(self._snake)
         self.tick()
 
     def run(self):
