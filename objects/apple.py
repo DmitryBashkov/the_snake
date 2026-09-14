@@ -48,6 +48,10 @@ class Apple(GameObject):
             k=1)[0]
         return self._type
 
+    def move(self) -> None:
+        '''Яблоко не двигается'''
+        pass
+
     @property
     def normal(self) -> bool:
         return self._type is AppleType.normal

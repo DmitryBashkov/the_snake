@@ -1,6 +1,5 @@
 
 from core.game import Game
-from core.renderer import Renderer
 import pygame
 
 
@@ -13,22 +12,16 @@ def main():
     # Инициализация Game
     game = Game()
 
-    # Инициализация рендера
-    renderer = Renderer()
-
     # Запуск игры
     game.run()
 
     while game.running:
 
-        # Если игра возвращает False,
-        # то завершаем текущий цикл
-        # с game.running = False
+        # Если игра возвращает False, то выходим из цикла
         if not game.tick():
-            continue
+            break
 
-        # Обновляем графику
-        renderer.update
+    pygame.quit()
 
 
 if __name__ == '__main__':

@@ -1,5 +1,6 @@
 from core.consts import (
-    SNAKE_COLOR
+    SNAKE_COLOR,
+    GRID_SIZE
 )
 from objects.apple import Apple, AppleType
 from objects.game import GameObject
@@ -14,6 +15,7 @@ class Snake(GameObject):
 
     def __init__(self) -> None:
         self._length = 1
+        self._grow = False
         self._positions = [(0, 0)]
         self._body_color = SNAKE_COLOR
         self._direction = (1, 0)
@@ -30,6 +32,15 @@ class Snake(GameObject):
         Если позиция (20,40), а направление (0,-1),
         то новая позиция будет (20, 20)
         '''
+        new_head = (
+            self.head[0] + self._direction[0] * GRID_SIZE,
+            self.head[1] + self._direction[1] * GRID_SIZE
+        )
+
+        self._positions.insert(0, new_head)
+
+        if not self._grow:
+            self.positions.pop()
         # dx, dy = self._direction
         # self._positions = [
         #     (x + dx * GRID_SIZE, y + dy * GRID_SIZE)

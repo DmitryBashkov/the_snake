@@ -4,6 +4,7 @@ from objects.apple import Apple
 from objects.wall import Wall
 from core.mechanics import Speed
 from core.renderer import Renderer
+from consts import UP, DOWN, LEFT, RIGHT
 import pygame
 
 
@@ -11,16 +12,18 @@ class Game():
     '''Класс для управления игрой.'''
 
     def __init__(self):
-        self._snake = Snake()
+
         self._game_objects: set[GameObject] = set()
         self._game_objects_to_remove: set[GameObject] = set()
         self._running = False
         self._gave_over_on_interception: bool
         self.speed = Speed()
         self.clock = pygame.time.Clock()
+        self._snake = Snake()
+        self._apple = Apple()
         self.renderer = Renderer()
         self._game_objects.add(self._snake)
-        self.tick()
+        self._game_objects.add(self._apple)
 
     def run(self):
         ''' Устанавливаем _running = True'''
@@ -37,6 +40,8 @@ class Game():
     def tick(self) -> bool:
 
         self.clock.tick(self.speed.value)
+
+        self.handle_keys(self._snake)
 
         # Для масштабируемости:
         # все объекты, которые должны двигаться, делают шаг
@@ -64,16 +69,22 @@ class Game():
             # В остальных случаях проверяем, с яблоком ли столкновение
             elif isinstance(interception_object, Apple):
 
-                wall = Wall(self._snake.eat(interception_object))
-
+                wall = self._snake.eat(interception_object)
                 if wall:
+                    wall = Wall(wall)
                     self.add_game_objects_to_list(wall)
+
+                self.remove_object(interception_object)
+                self._apple = Apple()
+                self.add_game_objects_to_list(self._apple)
 
             # Добавляем объект в список на удаление
             self.remove_object(interception_object)
 
         # Удаляем все объекты из списка на удаление
         self.remove_game_objects_from_list()
+
+        self.renderer.update()
 
         return True
 
@@ -87,10 +98,10 @@ class Game():
 
         for object in self._game_objects:
             if not isinstance(object, Snake):
-                if self._snake.head == object.head:
+                if self._snake.head in object.positions:
                     return object
             else:
-                if self._snake.head in self._snake.positions:
+                if self._snake.head in self._snake.positions[1:]:
                     return self._snake
         return None
 
@@ -115,3 +126,19 @@ class Game():
     def remove_object(self, obj: GameObject):
         '''Вносит удаляемый объект в список на удаление.'''
         self._game_objects_to_remove.add(obj)
+
+    def handle_keys(self, snake: Snake):
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                raise SystemExit
+
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_UP and snake.direction != UP:
+                    snake.update_direction(UP)
+                elif event.key == pygame.K_DOWN and snake.direction != DOWN:
+                    snake.update_direction(DOWN)
+                elif event.key == pygame.K_LEFT and snake.direction != RIGHT:
+                    snake.update_direction(LEFT)
+                elif event.key == pygame.K_RIGHT and snake.direction != LEFT:
+                    snake.update_direction(RIGHT)
