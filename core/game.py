@@ -4,7 +4,10 @@ from objects.apple import Apple
 from objects.wall import Wall
 from core.mechanics import Speed
 from core.renderer import Renderer
-from consts import UP, DOWN, LEFT, RIGHT
+from core.consts import (
+    UP, DOWN, LEFT, RIGHT,
+    MAX_APPLES
+)
 import pygame
 
 
@@ -13,17 +16,17 @@ class Game():
 
     def __init__(self):
 
-        self._game_objects: set[GameObject] = set()
-        self._game_objects_to_remove: set[GameObject] = set()
+        self._game_objects: GameObjects = GameObjects()
         self._running = False
-        self._gave_over_on_interception: bool
         self.speed = Speed()
         self.clock = pygame.time.Clock()
-        self._snake = Snake()
-        self._apple = Apple()
         self.renderer = Renderer()
-        self._game_objects.add(self._snake)
-        self._game_objects.add(self._apple)
+
+        self._snake = Snake()
+        self._game_objects.add_object(self._snake)
+
+        for _ in range(MAX_APPLES):
+            self._game_objects.add_object(Apple())
 
     def run(self):
         ''' Устанавливаем _running = True'''
@@ -38,6 +41,8 @@ class Game():
         return self._running
 
     def tick(self) -> bool:
+        # TODO: добавить обработку lifetime
+        # TODO: добавить обработку столкновений с границами
 
         self.clock.tick(self.speed.value)
 
@@ -46,15 +51,26 @@ class Game():
         # Для масштабируемости:
         # все объекты, которые должны двигаться, делают шаг
         # В нашем случае это только замейка и все
-        for object in self._game_objects:
-            object.move()
-            self.renderer.draw(object.positions, object.body_color)
+        self._game_objects.move_objects()
+
+        self._game_objects.dec_lifetime()
 
         # Определяем, есть ли столкновения змейки
         # с каким-либо объектом после движения
+        self._handle_interception()
+
+        self.renderer.clear()
+        self.renderer.draw_objects(self._game_objects.objects)
+
+        self.renderer.update()
+
+        return True
+
+    def _handle_interception(self):
+        '''Обрабатывает столкновения змейки с объектами.'''
+
         interception_object = self._has_interception()
 
-        # Если есть столкновение
         if interception_object:
 
             # Есть ли столкновение с объектами,
@@ -69,24 +85,21 @@ class Game():
             # В остальных случаях проверяем, с яблоком ли столкновение
             elif isinstance(interception_object, Apple):
 
+                interception_object.detect_type()
+
                 wall = self._snake.eat(interception_object)
                 if wall:
                     wall = Wall(wall)
-                    self.add_game_objects_to_list(wall)
+                    self._game_objects.add_object(wall)
 
-                self.remove_object(interception_object)
+                self._game_objects.remove_object(interception_object)
                 self._apple = Apple()
-                self.add_game_objects_to_list(self._apple)
+                self._game_objects.add_object(self._apple)
 
-            # Добавляем объект в список на удаление
-            self.remove_object(interception_object)
+            return True
 
-        # Удаляем все объекты из списка на удаление
-        self.remove_game_objects_from_list()
-
-        self.renderer.update()
-
-        return True
+        else:
+            return False
 
     def change_snake_direction(self, new_direction: tuple[int, int]) -> None:
         '''Меняет направление '''
@@ -96,7 +109,7 @@ class Game():
         '''Возвращает объект, с которым произошло столкноввение.
         None, если столкновения нет.'''
 
-        for object in self._game_objects:
+        for object in self._game_objects.objects:
             if not isinstance(object, Snake):
                 if self._snake.head in object.positions:
                     return object
@@ -108,25 +121,6 @@ class Game():
     def _game_over(self):
         pass
 
-    def add_game_objects_to_list(self, obj: GameObject) -> None:
-        '''Добавляет новый игровой объект в список.'''
-        self._game_objects.add(obj)
-
-    def remove_game_objects_from_list(self) -> None:
-        '''Удаляет ненужные игровые объекты из списка.'''
-        for object in self._game_objects_to_remove:
-            if object in self._game_objects:
-                self._game_objects.discard(object)
-
-                # Заодно освободим память на всякий случай
-                del object
-
-        self._game_objects_to_remove.clear()
-
-    def remove_object(self, obj: GameObject):
-        '''Вносит удаляемый объект в список на удаление.'''
-        self._game_objects_to_remove.add(obj)
-
     def handle_keys(self, snake: Snake):
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -134,11 +128,67 @@ class Game():
                 raise SystemExit
 
             if event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_UP and snake.direction != UP:
+                if event.key == pygame.K_UP and snake.direction != DOWN:
                     snake.update_direction(UP)
-                elif event.key == pygame.K_DOWN and snake.direction != DOWN:
+                elif event.key == pygame.K_DOWN and snake.direction != UP:
                     snake.update_direction(DOWN)
                 elif event.key == pygame.K_LEFT and snake.direction != RIGHT:
                     snake.update_direction(LEFT)
                 elif event.key == pygame.K_RIGHT and snake.direction != LEFT:
                     snake.update_direction(RIGHT)
+
+
+class GameObjects():
+
+    def __init__(self):
+        self._objects: list[GameObject] = []
+        self._used_positions: list[tuple[int, int]] = []
+
+    @property
+    def objects(self) -> list[GameObject]:
+        '''Возвращает все игровые объекты, которые есть в игре.'''
+        return self._objects
+
+    @property
+    def used_positions(self) -> list[tuple[int, int]]:
+        '''Возвращает список всех позиций на поле всех игровых объектов.'''
+        positions = list[tuple[int, int]]()
+
+        for object in self._objects:
+            positions.append(*object.positions)
+        return positions
+
+    def add_object(self, obj: GameObject) -> None:
+        '''Добавляет новый игровой объект в список.'''
+        self._objects.append(obj)
+        # TODO при столкновении со стеной, append получает несколько аргументов
+        self._used_positions.extend(obj.positions)
+
+    def remove_object(self, obj: GameObject) -> None:
+        '''Удаляет игровой объект из списка.'''
+        if obj not in self._objects:
+            return
+        else:
+            self._objects.remove(obj)
+            self._used_positions.remove(*obj.positions)
+
+    def move_objects(self) -> None:
+        '''Двигает все объекты.'''
+        for object in self._objects:
+            object.move()
+
+    def dec_lifetime(self) -> None:
+        '''Уменьшает lifetime всех объектов на 1.'''
+        for object in self._objects:
+
+            # еще живой объект
+            if object.life_time > 0:
+                object.dec_lifetime()
+
+            # объект, lifetime которого закончился, удаляем из игрs
+            elif object.life_time == 0:
+                self.remove_object(object)
+
+            # объект, который не имеет lifetime (в данном случае змейка)
+            elif object.life_time == -1:
+                pass

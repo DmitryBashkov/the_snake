@@ -1,10 +1,8 @@
 import pygame
 from core.consts import (
-    UP, DOWN, LEFT, RIGHT,
     DEFAULT_SPEED
 )
 
-from objects.snake import Snake
 
 # Настройка времени:
 clock = pygame.time.Clock()
@@ -39,20 +37,3 @@ class Speed():
 
 
 speed = Speed()
-
-
-def handle_keys(snake: Snake):
-    for event in pygame.event.get():
-        if event.type == pygame.QUIT:
-            pygame.quit()
-            raise SystemExit
-
-        if event.type == pygame.KEYDOWN:
-            if event.key == pygame.K_UP and snake.direction != UP:
-                snake.update_direction(UP)
-            elif event.key == pygame.K_DOWN and snake.direction != DOWN:
-                snake.update_direction(DOWN)
-            elif event.key == pygame.K_LEFT and snake.direction != RIGHT:
-                snake.update_direction(LEFT)
-            elif event.key == pygame.K_RIGHT and snake.direction != LEFT:
-                snake.update_direction(RIGHT)

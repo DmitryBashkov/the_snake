@@ -6,6 +6,8 @@ from core.consts import (
     BORDER_COLOR, BOARD_BACKGROUND_COLOR
 )
 
+from objects.game import GameObject
+
 
 class Renderer():
 
@@ -20,6 +22,9 @@ class Renderer():
 
         # Заголовок окна игрового поля:
         pygame.display.set_caption(GAME_NAME)
+
+    def clear(self):
+        self.screen.fill(BOARD_BACKGROUND_COLOR)
 
     def _draw_element(self,
                       position: tuple[int, int],
@@ -44,12 +49,21 @@ class Renderer():
                 rect, 1
             )
 
-    def draw(self,
-             positions: list[tuple[int, int]],
-             color: tuple[int, int, int]) -> None:
+    def _draw(self,
+              positions: list[tuple[int, int]],
+              color: tuple[int, int, int]) -> None:
         '''Рисует игровой объект'''
         for position in positions:
             self._draw_element(position, color)
 
     def update(self):
         pygame.display.update()
+
+    def draw_objects(self, game_objects: list[GameObject]) -> None:
+        '''Рисует все игровые объекты'''
+        for object in game_objects:
+            self._draw(object.positions, object.body_color)
+
+    def redraw_background(self, position: tuple[int, int]):
+
+        self._draw_element(position, BOARD_BACKGROUND_COLOR, True)

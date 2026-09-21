@@ -24,7 +24,11 @@ class AppleType(Enum):
 APPLE_TYPES = tuple(AppleType)
 
 # Вевероятности распределены по 50% для плохих и хороших яблок
-APPLE_TYPES_WEIGHTS = (40, 5, 20, 10, 25)
+# APPLE_TYPES_WEIGHTS = (40, 5, 20, 10, 25)
+# APPLE_TYPES_WEIGHTS = (0, 100, 0, 0, 0)
+APPLE_TYPES_WEIGHTS = (0, 0, 100, 0, 0)
+# APPLE_TYPES_WEIGHTS = (0, 0, 0, 100, 0)
+# APPLE_TYPES_WEIGHTS = (0, 0, 0, 0, 100)
 
 
 class Apple(GameObject):
@@ -40,16 +44,16 @@ class Apple(GameObject):
         self.life_time = 500
         self._is_game_over_on_interception = False
 
-    def detect_type(self) -> AppleType:
+    def detect_type(self) -> None:
         '''Определение типа яблока'''
         self._type = choices(
             population=APPLE_TYPES,
             weights=APPLE_TYPES_WEIGHTS,
             k=1)[0]
-        return self._type
 
     def move(self) -> None:
-        '''Яблоко не двигается'''
+        '''Яблоко не двигается.'''
+        self.life_time -= 1
         pass
 
     @property

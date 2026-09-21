@@ -10,9 +10,13 @@ class GameObject(ABC):
 
     _positions: list[tuple[int, int]]
     _body_color: tuple[int, int, int]
-    _life_time: int
+    life_time: int
     _moving_object: bool
     _is_game_over_on_interception: bool
+
+    def dec_lifetime(self) -> None:
+        '''Уменьшает lifetime объекта на 1.'''
+        self.life_time -= 1
 
     @property
     def positions(self) -> list[tuple[int, int]]:
@@ -37,8 +41,8 @@ class GameObject(ABC):
     def _randomize_position(self) -> list[tuple[int, int]]:
         '''Определение случайной позиции для игрового объекта'''
         return [(
-            randint(0, GRID_WIDTH) * GRID_SIZE,
-            randint(0, GRID_HEIGHT) * GRID_SIZE
+            randint(0, GRID_WIDTH - GRID_SIZE) * GRID_SIZE,
+            randint(0, GRID_HEIGHT - GRID_SIZE) * GRID_SIZE
         )]
 
     @abstractmethod

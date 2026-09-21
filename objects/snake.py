@@ -15,15 +15,16 @@ class Snake(GameObject):
 
     def __init__(self) -> None:
         self._length = 1
-        self._grow = False
+        self.grow = False
         self._positions = [(0, 0)]
         self._body_color = SNAKE_COLOR
-        self._direction = (1, 0)
+        self.direction = (1, 0)
         self._moving_object = True
         self._is_game_over_on_interception = True
+        self.life_time = -1
 
     def update_direction(self, new_direction: tuple[int, int]) -> None:
-        self._direction = new_direction
+        self.direction = new_direction
 
     def move(self) -> None:
         '''Движение определяется путем применения
@@ -33,21 +34,21 @@ class Snake(GameObject):
         то новая позиция будет (20, 20)
         '''
         new_head = (
-            self.head[0] + self._direction[0] * GRID_SIZE,
-            self.head[1] + self._direction[1] * GRID_SIZE
+            self.head[0] + self.direction[0] * GRID_SIZE,
+            self.head[1] + self.direction[1] * GRID_SIZE
         )
 
         self._positions.insert(0, new_head)
 
-        if not self._grow:
-            self.positions.pop()
+        if not self.grow:
+            self._positions.pop(-1)
         # dx, dy = self._direction
         # self._positions = [
         #     (x + dx * GRID_SIZE, y + dy * GRID_SIZE)
         #     for (x, y) in self._positions
         # ]
 
-        self._positions.remove(self.last)
+        # self._positions.remove(self.last)
 
     @property
     def length(self) -> int:
@@ -74,6 +75,9 @@ class Snake(GameObject):
     def throw_half(self) -> list[tuple[int, int]] | None:
         '''Удаляет вторую половину змейки и возвращает ее как результат'''
 
+        if self.length < 3:
+            return None
+
         # Находим середину, если нечетное,
         # то забираем от змейки больше половины
         mid_position = len(self._positions) // 2
@@ -87,11 +91,13 @@ class Snake(GameObject):
         return half
 
     def reverse_snake(self) -> None:
+        '''Меняет направление змейки на противоположное.'''
         self._positions.reverse
 
     def reverse_direction(self) -> None:
-        dx, dy = self._direction
-        self._direction = (-dx, -dy)
+        '''Меняет местами кнпки управления движением змейки.'''
+        dx, dy = self.direction
+        self.direction = (-dx, -dy)
 
     def inc(self, new_head: tuple[int, int]):
         self._positions.insert(0, new_head)
@@ -103,14 +109,22 @@ class Snake(GameObject):
 
         if apple.aid:
             self.heal()
+            print('aid')
 
         elif apple.rotten:
+            print('rotten')
+            self.inc(apple.head)
             return self.throw_half()
 
         elif apple.hot:
             self.reverse_snake()
+            print('hot')
 
         elif apple.drunk:
             self.reverse_direction()
+            print('drunk')
+
+        elif apple.normal:
+            print('normal')
 
         self.inc(apple.head)

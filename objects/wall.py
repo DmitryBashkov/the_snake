@@ -1,5 +1,5 @@
 from objects.game import GameObject
-from core.consts import WALL_COLOR, DEFAULT_WALL_LIFETIME
+from core.consts import WALL_COLOR, DEFAULT_GAME_OBJECT_LIFETIME
 
 
 class Wall(GameObject):
@@ -10,7 +10,7 @@ class Wall(GameObject):
             return None
         self._positions = positions
         self._body_color = WALL_COLOR
-        self.life_time = DEFAULT_WALL_LIFETIME
+        self.life_time = DEFAULT_GAME_OBJECT_LIFETIME
         self._is_game_over_on_interception = True
 
     def move(self):

@@ -28,5 +28,8 @@ SNAKE_COLOR = (0, 255, 0)
 # Цвет стены
 WALL_COLOR = (150, 150, 150)
 
-# Сколько циклов живет стена
-DEFAULT_WALL_LIFETIME = 100
+# Сколько циклов живет игровой объект
+DEFAULT_GAME_OBJECT_LIFETIME = 100
+
+# Максимальное количество яблок на поле
+MAX_APPLES = 1
