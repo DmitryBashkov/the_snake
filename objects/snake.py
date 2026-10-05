@@ -100,8 +100,13 @@ class Snake(GameObject):
     def reverse_snake(self) -> None:
         '''Меняет направление змейки на противоположное.'''
         self._positions.reverse()
+        if self.reverse:
+            self.update_direction(
+                (-self.direction[0] if self.axis_horizontal else self.direction[0],
+                 -self.direction[1] if self.axis_vertical else self.direction[1])
+            )
 
-    def reverse_direction(self) -> None:
+    def drunk(self) -> None:
         '''Меняет местами кнпки управления движением змейки.'''
         self.reverse = True
 
@@ -128,7 +133,7 @@ class Snake(GameObject):
 
         elif apple.drunk:
             self.last_apple = AppleType.drunk
-            self.reverse_direction()
+            self.drunk()
             print('drunk')
 
         elif apple.normal:

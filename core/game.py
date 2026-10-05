@@ -101,10 +101,6 @@ class Game():
         else:
             return False
 
-    def change_snake_direction(self, new_direction: tuple[int, int]) -> None:
-        '''Меняет направление '''
-        self._snake.update_direction(new_direction)
-
     def _has_interception(self) -> GameObject | None:
         '''Возвращает объект, с которым произошло столкноввение.
         None, если столкновения нет.'''
@@ -146,9 +142,9 @@ class Game():
                 '''
 
                 if event.key == pygame.K_UP and not snake.axis_vertical:
-                    snake.update_direction(UP if not snake.reverse else DOWN)
+                    snake.update_direction(DOWN if snake.reverse else UP)
                 elif event.key == pygame.K_DOWN and not snake.axis_vertical:
-                    snake.update_direction(DOWN if not snake.reverse else UP)
+                    snake.update_direction(UP if snake.reverse else DOWN)
                 elif event.key == pygame.K_LEFT and not snake.axis_horizontal:
                     snake.update_direction(RIGHT if snake.reverse else LEFT)
                 elif event.key == pygame.K_RIGHT and not snake.axis_horizontal:

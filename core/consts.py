@@ -32,4 +32,4 @@ WALL_COLOR = (150, 150, 150)
 DEFAULT_GAME_OBJECT_LIFETIME = 100
 
 # Максимальное количество яблок на поле
-MAX_APPLES = 1
+MAX_APPLES = 3
