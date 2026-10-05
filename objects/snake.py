@@ -1,6 +1,7 @@
 from core.consts import (
     SNAKE_COLOR,
-    GRID_SIZE
+    GRID_SIZE,
+    SCREEN_WIDTH, SCREEN_HEIGHT
 )
 from objects.apple import Apple, AppleType
 from objects.game import GameObject
@@ -16,6 +17,7 @@ class Snake(GameObject):
     def __init__(self) -> None:
         self._length = 1
         self.grow = False
+        self.reverse = False
         self._positions = [(0, 0)]
         self._body_color = SNAKE_COLOR
         self.direction = (1, 0)
@@ -34,25 +36,30 @@ class Snake(GameObject):
         то новая позиция будет (20, 20)
         '''
         new_head = (
-            self.head[0] + self.direction[0] * GRID_SIZE,
-            self.head[1] + self.direction[1] * GRID_SIZE
+            (self.head[0] + self.direction[0] * GRID_SIZE) % SCREEN_WIDTH,
+            (self.head[1] + self.direction[1] * GRID_SIZE) % SCREEN_HEIGHT
         )
 
         self._positions.insert(0, new_head)
 
         if not self.grow:
             self._positions.pop(-1)
-        # dx, dy = self._direction
-        # self._positions = [
-        #     (x + dx * GRID_SIZE, y + dy * GRID_SIZE)
-        #     for (x, y) in self._positions
-        # ]
 
-        # self._positions.remove(self.last)
+        self.grow = False
 
     @property
     def length(self) -> int:
         return len(self._positions)
+
+    @property
+    def axis_horizontal(self) -> bool:
+        '''Возвращает true, если змейка движется по горизонтали.'''
+        return self.direction[0] != 0
+
+    @property
+    def axis_vertical(self) -> bool:
+        '''Возвращает true, если змейка движется по вертикали.'''
+        return self.direction[1] != 0
 
     def is_last(self, position: tuple[int, int]) -> bool:
         return position == (self._positions[self.length - 1])
@@ -92,39 +99,40 @@ class Snake(GameObject):
 
     def reverse_snake(self) -> None:
         '''Меняет направление змейки на противоположное.'''
-        self._positions.reverse
+        self._positions.reverse()
 
     def reverse_direction(self) -> None:
         '''Меняет местами кнпки управления движением змейки.'''
-        dx, dy = self.direction
-        self.direction = (-dx, -dy)
-
-    def inc(self, new_head: tuple[int, int]):
-        self._positions.insert(0, new_head)
+        self.reverse = True
 
     def heal(self):
-        self.reverse_direction()
+        self.reverse = False
 
     def eat(self, apple: Apple):
 
         if apple.aid:
+            self.last_apple = AppleType.aid
             self.heal()
             print('aid')
 
         elif apple.rotten:
+            self.last_apple = AppleType.rotten
             print('rotten')
-            self.inc(apple.head)
+            self.grow = True
             return self.throw_half()
 
         elif apple.hot:
+            self.last_apple = AppleType.hot
             self.reverse_snake()
             print('hot')
 
         elif apple.drunk:
+            self.last_apple = AppleType.drunk
             self.reverse_direction()
             print('drunk')
 
         elif apple.normal:
+            self.last_apple = AppleType.normal
             print('normal')
 
-        self.inc(apple.head)
+        self.grow = True

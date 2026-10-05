@@ -1,3 +1,5 @@
+from random import randint
+
 from objects.game import GameObject
 from objects.snake import Snake
 from objects.apple import Apple
@@ -5,7 +7,7 @@ from objects.wall import Wall
 from core.mechanics import Speed
 from core.renderer import Renderer
 from core.consts import (
-    UP, DOWN, LEFT, RIGHT,
+    GRID_HEIGHT, GRID_SIZE, GRID_WIDTH, UP, DOWN, LEFT, RIGHT,
     MAX_APPLES
 )
 import pygame
@@ -26,7 +28,7 @@ class Game():
         self._game_objects.add_object(self._snake)
 
         for _ in range(MAX_APPLES):
-            self._game_objects.add_object(Apple())
+            self._game_objects.add_object(Apple(self.gen_rand_pos()))
 
     def run(self):
         ''' Устанавливаем _running = True'''
@@ -42,11 +44,9 @@ class Game():
 
     def tick(self) -> bool:
         # TODO: добавить обработку lifetime
-        # TODO: добавить обработку столкновений с границами
-
-        self.clock.tick(self.speed.value)
 
         self.handle_keys(self._snake)
+        self.clock.tick(self.speed.value)
 
         # Для масштабируемости:
         # все объекты, которые должны двигаться, делают шаг
@@ -93,7 +93,7 @@ class Game():
                     self._game_objects.add_object(wall)
 
                 self._game_objects.remove_object(interception_object)
-                self._apple = Apple()
+                self._apple = Apple(self.gen_rand_pos())
                 self._game_objects.add_object(self._apple)
 
             return True
@@ -119,7 +119,7 @@ class Game():
         return None
 
     def _game_over(self):
-        pass
+        self.stop()
 
     def handle_keys(self, snake: Snake):
         for event in pygame.event.get():
@@ -128,14 +128,41 @@ class Game():
                 raise SystemExit
 
             if event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_UP and snake.direction != DOWN:
-                    snake.update_direction(UP)
-                elif event.key == pygame.K_DOWN and snake.direction != UP:
-                    snake.update_direction(DOWN)
-                elif event.key == pygame.K_LEFT and snake.direction != RIGHT:
-                    snake.update_direction(LEFT)
-                elif event.key == pygame.K_RIGHT and snake.direction != LEFT:
-                    snake.update_direction(RIGHT)
+
+                '''дальше очень хреновая логика, которая меняет направление
+                # змейки в зависимости от того,
+                # в каком состоянии она находится (reverse = True/False)
+                # Вдобавок ей надо проверять,
+                # что при реверсе кнопок управления,
+                # змейка не может двигаться в противоположном направлении
+                # иначе она столкнется сама с собой
+                # Такая хуйня, собачка
+
+                # и чтобы нас не ругал преподавать за слишком сложное изложение
+                # мы попробуем оправдаться новыми функциями
+                # в классе змейки axis_horizontal и axis_vertical,
+                # которые возвращают true / false
+                # и щепоткой кода в update_direction
+                '''
+
+                if event.key == pygame.K_UP and not snake.axis_vertical:
+                    snake.update_direction(UP if not snake.reverse else DOWN)
+                elif event.key == pygame.K_DOWN and not snake.axis_vertical:
+                    snake.update_direction(DOWN if not snake.reverse else UP)
+                elif event.key == pygame.K_LEFT and not snake.axis_horizontal:
+                    snake.update_direction(RIGHT if snake.reverse else LEFT)
+                elif event.key == pygame.K_RIGHT and not snake.axis_horizontal:
+                    snake.update_direction(LEFT if snake.reverse else RIGHT)
+
+    def gen_rand_pos(self) -> list[tuple[int, int]]:
+        '''Определение случайной позиции для игрового объекта'''
+        while True:
+            position = [(
+                randint(0, GRID_WIDTH - GRID_SIZE) * GRID_SIZE,
+                randint(0, GRID_HEIGHT - GRID_SIZE) * GRID_SIZE
+            )]
+            if position[0] not in self._game_objects.used_positions:
+                return position
 
 
 class GameObjects():
@@ -155,7 +182,7 @@ class GameObjects():
         positions = list[tuple[int, int]]()
 
         for object in self._objects:
-            positions.append(*object.positions)
+            positions.extend(object.positions)
         return positions
 
     def add_object(self, obj: GameObject) -> None:
@@ -170,7 +197,9 @@ class GameObjects():
             return
         else:
             self._objects.remove(obj)
-            self._used_positions.remove(*obj.positions)
+            for position in obj.positions:
+                if position in self._used_positions:
+                    self._used_positions.remove(position)
 
     def move_objects(self) -> None:
         '''Двигает все объекты.'''

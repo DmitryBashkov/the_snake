@@ -24,11 +24,12 @@ class AppleType(Enum):
 APPLE_TYPES = tuple(AppleType)
 
 # Вевероятности распределены по 50% для плохих и хороших яблок
-# APPLE_TYPES_WEIGHTS = (40, 5, 20, 10, 25)
+APPLE_TYPES_WEIGHTS = (40, 5, 20, 10, 25)
 # APPLE_TYPES_WEIGHTS = (0, 100, 0, 0, 0)
-APPLE_TYPES_WEIGHTS = (0, 0, 100, 0, 0)
+# APPLE_TYPES_WEIGHTS = (0, 0, 100, 0, 0)
 # APPLE_TYPES_WEIGHTS = (0, 0, 0, 100, 0)
 # APPLE_TYPES_WEIGHTS = (0, 0, 0, 0, 100)
+# APPLE_TYPES_WEIGHTS = (100, 0, 0, 0, 0)
 
 
 class Apple(GameObject):
@@ -38,9 +39,9 @@ class Apple(GameObject):
     # пока яблоко не съедено, оно находится в суперпозиции всех 5 типов
     _type: AppleType
 
-    def __init__(self) -> None:
+    def __init__(self, positions: list[tuple[int, int]]) -> None:
         self._body_color = (255, 0, 0)
-        self._positions = self._randomize_position()
+        self._positions = positions
         self.life_time = 500
         self._is_game_over_on_interception = False
 

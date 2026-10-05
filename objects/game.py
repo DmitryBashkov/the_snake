@@ -1,8 +1,4 @@
 from abc import ABC, abstractmethod
-from random import randint
-from core.consts import (
-    GRID_SIZE, GRID_HEIGHT, GRID_WIDTH
-)
 
 
 class GameObject(ABC):
@@ -37,13 +33,6 @@ class GameObject(ABC):
     def is_game_over_on_interception(self) -> bool:
         '''Возвращает true, если после столкновения игра останавливаетя.'''
         return self._is_game_over_on_interception
-
-    def _randomize_position(self) -> list[tuple[int, int]]:
-        '''Определение случайной позиции для игрового объекта'''
-        return [(
-            randint(0, GRID_WIDTH - GRID_SIZE) * GRID_SIZE,
-            randint(0, GRID_HEIGHT - GRID_SIZE) * GRID_SIZE
-        )]
 
     @abstractmethod
     def move(self):
