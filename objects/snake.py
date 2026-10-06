@@ -133,7 +133,10 @@ class Snake(GameObject):
         self.reverse = False
 
     def eat(self, apple: Apple):
-        """Определяет, что происходит со змейкой после поедания яблока."""
+        r"""Определяет, что происходит со змейкой после поедания яблока.
+        Если съел гнилое яблоко, то выозвращает половину тела.
+        В остальнух случаях вовзращает None.
+        """
         if apple.aid:
             self.last_apple = AppleType.aid
             self.heal()
@@ -155,3 +158,4 @@ class Snake(GameObject):
             self.last_apple = AppleType.normal
 
         self.grow = True
+        return None

@@ -86,9 +86,9 @@ class Game():
 
                 interception_object.detect_type()
 
-                wall = self._snake.eat(interception_object)
-                if wall:
-                    wall = Wall(wall)
+                is_wall = self._snake.eat(interception_object)
+                if is_wall:
+                    wall = Wall(is_wall)
                     self._game_objects.add_object(wall)
 
                 self._game_objects.remove_object(interception_object)
