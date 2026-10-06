@@ -14,4 +14,5 @@ class Wall(GameObject):
         self._is_game_over_on_interception = True
 
     def move(self):
+        """Стена не двигается."""
         pass
