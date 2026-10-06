@@ -4,12 +4,14 @@ from objects.game import GameObject
 from objects.snake import Snake
 from objects.apple import Apple
 from objects.wall import Wall
+
 from core.mechanics import Speed
 from core.renderer import Renderer
 from core.consts import (
     GRID_HEIGHT, GRID_SIZE, GRID_WIDTH, UP, DOWN, LEFT, RIGHT,
     MAX_APPLES,
 )
+
 import pygame
 
 
@@ -128,34 +130,45 @@ class Game():
             if event.type == pygame.KEYDOWN:
 
                 """
-                дальше очень хреновая логика, которая меняет направление змейки в зависимости от того,
+                дальше очень хреновая логика,
+                которая меняет направление змейки в зависимости от того,
                 в каком состоянии она находится (reverse = True/False)
                 Вдобавок ей надо проверять, что при реверсе кнопок управления,
-                змейка не может двигаться в противоположном направлении иначе она столкнется сама с собой
+                змейка не может двигаться в противоположном направлении
+                иначе она столкнется сама с собой
                 Такая хуйня, собачка
 
-                И чтобы нас не ругал преподавать за слишком сложное изложение
-                мы попробуем оправдаться новыми функциями в классе змейки axis_horizontal и axis_vertical,
-                которые возвращают true / false и щепоткой кода в update_direction
+                И чтобы нас не ругал преподаватель за слишком сложное изложение
+                мы попробуем оправдаться новыми функциями
+                в классе змейки axis_horizontal и axis_vertical,
+                которые возвращают true / false
+                и щепоткой кода в update_direction
 
-                Логика такая. Если нажата кнопка, и направление змейки не в одной оси с кнопкой,
-                то обновляем направление. При этом, если включен реверс, то направление меняется на противоположное.
+                Логика такая. Если нажата кнопка,
+                и направление змейки не в одной оси с кнопкой,
+                то обновляем направление.
+
+                При этом, если включен реверс,
+                то направление меняется на противоположное.
                 """
 
-                if event.key == pygame.K_UP and not snake.axis_vertical:
+                if event.key == pygame.K_UP and not snake.axis_vert:
                     snake.update_direction(DOWN if snake.reverse else UP)
-                elif event.key == pygame.K_DOWN and not snake.axis_vertical:
+                elif event.key == pygame.K_DOWN and not snake.axis_vert:
                     snake.update_direction(UP if snake.reverse else DOWN)
-                elif event.key == pygame.K_LEFT and not snake.axis_horizontal:
+                elif event.key == pygame.K_LEFT and not snake.axis_horizon:
                     snake.update_direction(RIGHT if snake.reverse else LEFT)
-                elif event.key == pygame.K_RIGHT and not snake.axis_horizontal:
+                elif event.key == pygame.K_RIGHT and not snake.axis_horizon:
                     snake.update_direction(LEFT if snake.reverse else RIGHT)
 
     def gen_rand_pos(self) -> list[tuple[int, int]]:
         """
         Определение случайной позиции для игрового объекта.
-        Почему это тут, а не в классе игрового объекта? Потому что "ответственность" за генерацию позиции,
-        которая не попадает в какой-либо другой объект, лежит на уровне игры, а не игрового объекта.
+        Почему это тут, а не в классе игрового объекта?
+
+        Потому что "ответственность" за генерацию позиции,
+        которая не попадает в какой-либо другой объект,
+        лежит на уровне игры, а не игрового объекта.
         Игровому объекту необязательно знать о других объектах.
         """
         while True:
@@ -168,7 +181,9 @@ class Game():
 
 
 class GameObjects():
-    """Класс для управления списком игровых объектов. Такими, добавление объектов, удаления итд."""
+    """Класс для управления списком игровых объектов.
+    Такими, добавление объектов, удаления итд.
+    """
 
     def __init__(self):
         self._objects: list[GameObject] = []

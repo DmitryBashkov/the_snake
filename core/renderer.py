@@ -31,7 +31,10 @@ class Renderer():
     def _draw_element(self,
                       position: tuple[int, int],
                       color: tuple[int, int, int],
-                      fade: bool = False) -> None:      # fade используется для прорисовки фона у последнего элемента змейки
+
+                      # fade используется для прорисовки фона
+                      # у последнего элемента змейки
+                      fade: bool = False) -> None:
         """Рисует отдельную позицию объекта."""
         rect = pygame.Rect(position, (GRID_SIZE, GRID_SIZE))
 

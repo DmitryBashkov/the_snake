@@ -42,8 +42,10 @@ class Snake(GameObject):
 
     def move(self) -> None:
         """
-        Движение определяется путем добавления новой головы в направлении движения
-        и удаления последнего элемента змейки, если она не растет (grow == False).
+        Движение определяется путем добавления
+        новой головы в направлении движения
+        и удаления последнего элемента змейки,
+        если она не растет (grow == False).
         """
         new_head = (
             (self.head[0] + self.direction[0] * GRID_SIZE) % SCREEN_WIDTH,
@@ -55,7 +57,8 @@ class Snake(GameObject):
         if not self.grow:
             self._positions.pop(-1)
 
-        # когда змейка подросла, онап перестает расти, пока не съест новое яблоко
+        # когда змейка подросла, онап перестает расти,
+        # пока не съест новое яблоко
         self.grow = False
 
     @property
@@ -64,17 +67,19 @@ class Snake(GameObject):
         return len(self._positions)
 
     @property
-    def axis_horizontal(self) -> bool:
+    def axis_horizon(self) -> bool:
         """Возвращает true, если змейка движется по горизонтали."""
         return self.direction[0] != 0
 
     @property
-    def axis_vertical(self) -> bool:
+    def axis_vert(self) -> bool:
         """Возвращает true, если змейка движется по вертикали."""
         return self.direction[1] != 0
 
     def is_last(self, position: tuple[int, int]) -> bool:
-        """Возвращает true, если переданная позиция является последним элементом змейки."""
+        """Возвращает true,
+        если переданная позиция является последним элементом змейки.
+        """
         return position == (self._positions[self.length - 1])
 
     @property
@@ -116,8 +121,8 @@ class Snake(GameObject):
         self._positions.reverse()
         self.update_direction(
             (
-                -self.direction[0] if self.axis_horizontal else self.direction[0],
-                -self.direction[1] if self.axis_vertical else self.direction[1],
+                -self.direction[0] if self.axis_horizon else self.direction[0],
+                -self.direction[1] if self.axis_vert else self.direction[1],
             ),
         )
 
@@ -126,7 +131,9 @@ class Snake(GameObject):
         self.reverse = True
 
     def heal(self):
-        """Восстанавливает здоровье змейки, если она была повреждена тухлым яблоком."""
+        """Восстанавливает здоровье змейки,
+        если она была повреждена тухлым яблоком.
+        """
         self.reverse = False
 
     def eat(self, apple: Apple):
