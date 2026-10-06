@@ -107,10 +107,10 @@ class Game():
         """Возвращает объект, с которым произошло столкноввение.
         None, если столкновения нет.
         """
-        for object in self._game_objects.objects:
-            if not isinstance(object, Snake):
-                if self._snake.head in object.positions:
-                    return object
+        for obj in self._game_objects.objects:
+            if not isinstance(obj, Snake):
+                if self._snake.head in obj.positions:
+                    return obj
             else:
                 if self._snake.head in self._snake.positions[1:]:
                     return self._snake
@@ -199,8 +199,8 @@ class GameObjects():
         """Возвращает список всех позиций на поле всех игровых объектов."""
         positions = list[tuple[int, int]]()
 
-        for object in self._objects:
-            positions.extend(object.positions)
+        for obj in self._objects:
+            positions.extend(obj.positions)
         return positions
 
     def add_object(self, obj: GameObject) -> None:
@@ -221,21 +221,21 @@ class GameObjects():
 
     def move_objects(self) -> None:
         """Двигает все объекты."""
-        for object in self._objects:
-            object.move()
+        for obj in self._objects:
+            obj.move()
 
     def dec_lifetime(self) -> None:
         """Уменьшает lifetime всех объектов на 1."""
-        for object in self._objects:
+        for obj in self._objects:
 
             # еще живой объект
-            if object.life_time > 0:
-                object.dec_lifetime()
+            if obj.life_time > 0:
+                obj.dec_lifetime()
 
             # объект, lifetime которого закончился, удаляем из игрs
-            elif object.life_time == 0:
-                self.remove_object(object)
+            elif obj.life_time == 0:
+                self.remove_object(obj)
 
             # объект, который не имеет lifetime (в данном случае змейка)
-            elif object.life_time == -1:
+            elif obj.life_time == -1:
                 pass

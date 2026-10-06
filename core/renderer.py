@@ -66,5 +66,5 @@ class Renderer():
 
     def draw_objects(self, game_objects: list[GameObject]) -> None:
         """Рисует все игровые объекты"""
-        for object in game_objects:
-            self._draw(object.positions, object.body_color)
+        for obj in game_objects:
+            self._draw(obj.positions, obj.body_color)
