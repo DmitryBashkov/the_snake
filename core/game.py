@@ -48,7 +48,6 @@ class Game():
         # TODO: добавить обработку lifetime
 
         self.handle_keys(self._snake)
-        self.clock.tick(self.speed.value)
 
         # Для масштабируемости:
         # все объекты, которые должны двигаться, делают шаг

@@ -26,7 +26,19 @@ class Snake(GameObject):
         self.life_time = -1
 
     def update_direction(self, new_direction: tuple[int, int]) -> None:
+        '''Обновляет направление движения змейки.'''
         self.direction = new_direction
+
+    def get_head_position(self) -> tuple[int, int]:
+        '''Возвращает позицию головы змейки.'''
+        return self.head
+
+    def reset(self) -> None:
+        '''Сбрасывает змейку в начальное состояние.'''
+        self._positions = [(0, 0)]
+        self.direction = (1, 0)
+        self.grow = False
+        self.reverse = False
 
     def move(self) -> None:
         '''

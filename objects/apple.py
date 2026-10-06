@@ -1,7 +1,13 @@
 from enum import Enum, auto
 from objects.game import GameObject
-from random import choices
-from core.consts import APPLE_COLOR, DEFAULT_GAME_OBJECT_LIFETIME
+from random import choices, randint
+from core.consts import (
+    APPLE_COLOR,
+    DEFAULT_GAME_OBJECT_LIFETIME,
+    GRID_HEIGHT,
+    GRID_SIZE,
+    GRID_WIDTH,
+)
 
 
 class AppleType(Enum):
@@ -35,14 +41,26 @@ class Apple(GameObject):
     # пока яблоко не съедено, оно находится в суперпозиции всех 5 типов
     _type: AppleType
 
-    def __init__(self, positions: list[tuple[int, int]]) -> None:
+    def __init__(
+        self, positions: list[tuple[int, int]] | None = None
+    ) -> None:
 
         # у всех яблок будет один и тот же цвет,
         # чтобы пользователь не знал, какое яблоко он съел, пока не съест его
         self._body_color = APPLE_COLOR
-        self._positions = positions
+        if positions is None:
+            self.randomize_position()
+        else:
+            self._positions = positions
         self.life_time = DEFAULT_GAME_OBJECT_LIFETIME
         self._is_game_over_on_interception = False
+
+    def randomize_position(self) -> None:
+        '''Устанавливает случайную позицию яблока.'''
+        self._positions = [(
+            randint(0, GRID_WIDTH - 1) * GRID_SIZE,
+            randint(0, GRID_HEIGHT - 1) * GRID_SIZE
+        )]
 
     def detect_type(self) -> None:
         '''Определение типа яблока'''
