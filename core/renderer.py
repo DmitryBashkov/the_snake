@@ -1,11 +1,7 @@
 import pygame
-from core.consts import (
-    SCREEN_HEIGHT, SCREEN_WIDTH,
-    GAME_NAME,
-    GRID_SIZE,
-    BORDER_COLOR, BOARD_BACKGROUND_COLOR,
-)
 
+from core.consts import (BOARD_BACKGROUND_COLOR, BORDER_COLOR, GAME_NAME,
+                         GRID_SIZE, SCREEN_HEIGHT, SCREEN_WIDTH)
 from objects.game import GameObject
 
 

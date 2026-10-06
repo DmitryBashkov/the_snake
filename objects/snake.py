@@ -1,8 +1,4 @@
-from core.consts import (
-    SNAKE_COLOR,
-    GRID_SIZE,
-    SCREEN_WIDTH, SCREEN_HEIGHT,
-)
+from core.consts import GRID_SIZE, SCREEN_HEIGHT, SCREEN_WIDTH, SNAKE_COLOR
 from objects.apple import Apple, AppleType
 from objects.game import GameObject
 
