@@ -43,13 +43,12 @@ clock = pygame.time.Clock()
 
 
 def handle_keys(game: Game, snake: Snake):
-    '''Обрабатывает нажатия клавиш.'''
+    """Обрабатывает нажатия клавиш."""
     Game.handle_keys(game, snake)
 
 
 def main():
-    '''Основная функция для инициаации.'''
-
+    """Основная функция для инициаации."""
     pygame.init()
     game = Game()
     game.run()

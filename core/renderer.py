@@ -3,13 +3,14 @@ from core.consts import (
     SCREEN_HEIGHT, SCREEN_WIDTH,
     GAME_NAME,
     GRID_SIZE,
-    BORDER_COLOR, BOARD_BACKGROUND_COLOR
+    BORDER_COLOR, BOARD_BACKGROUND_COLOR,
 )
 
 from objects.game import GameObject
 
 
 class Renderer():
+    """Класс для отрисовки объектов на экране."""
 
     screen: pygame.Surface
 
@@ -24,21 +25,21 @@ class Renderer():
         pygame.display.set_caption(GAME_NAME)
 
     def clear(self):
+        """Очищает экран, заливая его цветом фона."""
         self.screen.fill(BOARD_BACKGROUND_COLOR)
 
     def _draw_element(self,
                       position: tuple[int, int],
                       color: tuple[int, int, int],
                       fade: bool = False) -> None:      # fade используется для прорисовки фона у последнего элемента змейки
-        '''Рисует отдельную позицию объекта.'''
-
+        """Рисует отдельную позицию объекта."""
         rect = pygame.Rect(position, (GRID_SIZE, GRID_SIZE))
 
         if fade:
             pygame.draw.rect(
                 self.screen,
                 BOARD_BACKGROUND_COLOR,
-                rect
+                rect,
             )
 
         else:
@@ -46,20 +47,21 @@ class Renderer():
             pygame.draw.rect(
                 self.screen,
                 BORDER_COLOR,
-                rect, 1
+                rect, 1,
             )
 
     def _draw(self,
               positions: list[tuple[int, int]],
               color: tuple[int, int, int]) -> None:
-        '''Рисует игровой объект'''
+        """Рисует игровой объект"""
         for position in positions:
             self._draw_element(position, color)
 
     def update(self):
+        """Обновляет экран. Вызывается после отрисовки всех объектов."""
         pygame.display.update()
 
     def draw_objects(self, game_objects: list[GameObject]) -> None:
-        '''Рисует все игровые объекты'''
+        """Рисует все игровые объекты"""
         for object in game_objects:
             self._draw(object.positions, object.body_color)

@@ -1,14 +1,14 @@
 from core.consts import (
     SNAKE_COLOR,
     GRID_SIZE,
-    SCREEN_WIDTH, SCREEN_HEIGHT
+    SCREEN_WIDTH, SCREEN_HEIGHT,
 )
 from objects.apple import Apple, AppleType
 from objects.game import GameObject
 
 
 class Snake(GameObject):
-    '''Игровой объект змейка.'''
+    """Игровой объект змейка."""
 
     # игра начинается с обычной змейкой
     last_apple: AppleType = AppleType.normal
@@ -26,28 +26,28 @@ class Snake(GameObject):
         self.life_time = -1
 
     def update_direction(self, new_direction: tuple[int, int]) -> None:
-        '''Обновляет направление движения змейки.'''
+        """Обновляет направление движения змейки."""
         self.direction = new_direction
 
     def get_head_position(self) -> tuple[int, int]:
-        '''Возвращает позицию головы змейки.'''
+        """Возвращает позицию головы змейки."""
         return self.head
 
     def reset(self) -> None:
-        '''Сбрасывает змейку в начальное состояние.'''
+        """Сбрасывает змейку в начальное состояние."""
         self._positions = [(0, 0)]
         self.direction = (1, 0)
         self.grow = False
         self.reverse = False
 
     def move(self) -> None:
-        '''
+        """
         Движение определяется путем добавления новой головы в направлении движения
         и удаления последнего элемента змейки, если она не растет (grow == False).
-        '''
+        """
         new_head = (
             (self.head[0] + self.direction[0] * GRID_SIZE) % SCREEN_WIDTH,
-            (self.head[1] + self.direction[1] * GRID_SIZE) % SCREEN_HEIGHT
+            (self.head[1] + self.direction[1] * GRID_SIZE) % SCREEN_HEIGHT,
         )
 
         self._positions.insert(0, new_head)
@@ -60,30 +60,32 @@ class Snake(GameObject):
 
     @property
     def length(self) -> int:
+        """Возвращает длину змейки."""
         return len(self._positions)
 
     @property
     def axis_horizontal(self) -> bool:
-        '''Возвращает true, если змейка движется по горизонтали.'''
+        """Возвращает true, если змейка движется по горизонтали."""
         return self.direction[0] != 0
 
     @property
     def axis_vertical(self) -> bool:
-        '''Возвращает true, если змейка движется по вертикали.'''
+        """Возвращает true, если змейка движется по вертикали."""
         return self.direction[1] != 0
 
     def is_last(self, position: tuple[int, int]) -> bool:
+        """Возвращает true, если переданная позиция является последним элементом змейки."""
         return position == (self._positions[self.length - 1])
 
     @property
     def last(self) -> tuple[int, int]:
+        """Возвращает позицию последнего элемента змейки."""
         return self._positions[self.length - 1]
 
     def intercepts(self, obj_list: list[GameObject]) -> bool:
-        '''
-        Определение столкновения.\n
+        """Определение столкновения.
         Для этого достаточно понять, попала ли голова змейки в другой объект
-        '''
+        """
         for obj in obj_list:
             return self.head == obj.head
 
@@ -91,11 +93,9 @@ class Snake(GameObject):
         return self.head in self._positions
 
     def throw_half(self) -> list[tuple[int, int]] | None:
-        '''
-        Удаляет вторую половину змейки и возвращает ее как результат
+        """Удаляет вторую половину змейки и возвращает ее как результат
         Применимо для тухлого яблока
-        '''
-
+        """
         if self.length < 3:
             return None
 
@@ -112,24 +112,25 @@ class Snake(GameObject):
         return half
 
     def reverse_snake(self) -> None:
-        '''Меняет направление змейки на противоположное.'''
+        """Меняет направление змейки на противоположное."""
         self._positions.reverse()
         self.update_direction(
             (
                 -self.direction[0] if self.axis_horizontal else self.direction[0],
-                -self.direction[1] if self.axis_vertical else self.direction[1]
-            )
+                -self.direction[1] if self.axis_vertical else self.direction[1],
+            ),
         )
 
     def drunk(self) -> None:
-        '''Меняет местами кнпки управления движением змейки.'''
+        """Меняет местами кнпки управления движением змейки."""
         self.reverse = True
 
     def heal(self):
+        """Восстанавливает здоровье змейки, если она была повреждена тухлым яблоком."""
         self.reverse = False
 
     def eat(self, apple: Apple):
-
+        """Определяет, что происходит со змейкой после поедания яблока."""
         if apple.aid:
             self.last_apple = AppleType.aid
             self.heal()

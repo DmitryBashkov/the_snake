@@ -8,13 +8,13 @@ from core.mechanics import Speed
 from core.renderer import Renderer
 from core.consts import (
     GRID_HEIGHT, GRID_SIZE, GRID_WIDTH, UP, DOWN, LEFT, RIGHT,
-    MAX_APPLES
+    MAX_APPLES,
 )
 import pygame
 
 
 class Game():
-    '''Класс для управления игрой.'''
+    """Класс для управления игрой."""
 
     def __init__(self):
 
@@ -31,20 +31,20 @@ class Game():
             self._game_objects.add_object(Apple(self.gen_rand_pos()))
 
     def run(self):
-        ''' Устанавливаем _running = True'''
+        """Устанавливаем _running = True."""
         self._running = True
 
     def stop(self):
-        ''' Устанавливаем _running = False'''
+        """Устанавливаем _running = False"""
         self._running = False
 
     @property
     def running(self):
-        '''Возвращает True, если игра запущена, иначе False.'''
+        """Возвращает True, если игра запущена, иначе False."""
         return self._running
 
     def tick(self) -> bool:
-        '''Один игровой цикл. Возвращает True, если игра продолжается,  '''
+        """Один игровой цикл. Возвращает True, если игра продолжается"""
         # TODO: добавить обработку lifetime
 
         self.handle_keys(self._snake)
@@ -68,8 +68,7 @@ class Game():
         return True
 
     def _handle_interception(self):
-        '''Обрабатывает столкновения змейки с объектами.'''
-
+        """Обрабатывает столкновения змейки с объектами."""
         interception_object = self._has_interception()
 
         if interception_object:
@@ -103,9 +102,9 @@ class Game():
             return False
 
     def _has_interception(self) -> GameObject | None:
-        '''Возвращает объект, с которым произошло столкноввение.
-        None, если столкновения нет.'''
-
+        """Возвращает объект, с которым произошло столкноввение.
+        None, если столкновения нет.
+        """
         for object in self._game_objects.objects:
             if not isinstance(object, Snake):
                 if self._snake.head in object.positions:
@@ -116,11 +115,11 @@ class Game():
         return None
 
     def _game_over(self):
-        '''Останавливает игру.'''
+        """Останавливает игру."""
         self.stop()
 
     def handle_keys(self, snake: Snake):
-        '''Обрабатывает нажатия клавиш.'''
+        """Обрабатывает нажатия клавиш."""
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 pygame.quit()
@@ -128,7 +127,7 @@ class Game():
 
             if event.type == pygame.KEYDOWN:
 
-                '''
+                """
                 дальше очень хреновая логика, которая меняет направление змейки в зависимости от того,
                 в каком состоянии она находится (reverse = True/False)
                 Вдобавок ей надо проверять, что при реверсе кнопок управления,
@@ -141,7 +140,7 @@ class Game():
 
                 Логика такая. Если нажата кнопка, и направление змейки не в одной оси с кнопкой,
                 то обновляем направление. При этом, если включен реверс, то направление меняется на противоположное.
-                '''
+                """
 
                 if event.key == pygame.K_UP and not snake.axis_vertical:
                     snake.update_direction(DOWN if snake.reverse else UP)
@@ -153,23 +152,23 @@ class Game():
                     snake.update_direction(LEFT if snake.reverse else RIGHT)
 
     def gen_rand_pos(self) -> list[tuple[int, int]]:
-        '''
+        """
         Определение случайной позиции для игрового объекта.
         Почему это тут, а не в классе игрового объекта? Потому что "ответственность" за генерацию позиции,
         которая не попадает в какой-либо другой объект, лежит на уровне игры, а не игрового объекта.
         Игровому объекту необязательно знать о других объектах.
-        '''
+        """
         while True:
             position = [(
                 randint(0, GRID_WIDTH) * GRID_SIZE,
-                randint(0, GRID_HEIGHT) * GRID_SIZE
+                randint(0, GRID_HEIGHT) * GRID_SIZE,
             )]
             if position[0] not in self._game_objects.used_positions:
                 return position
 
 
 class GameObjects():
-    '''Класс для управления списком игровых объектов. Такими, добавление объектов, удаления итд.'''
+    """Класс для управления списком игровых объектов. Такими, добавление объектов, удаления итд."""
 
     def __init__(self):
         self._objects: list[GameObject] = []
@@ -177,12 +176,12 @@ class GameObjects():
 
     @property
     def objects(self) -> list[GameObject]:
-        '''Возвращает список всех игровых объектов, которые есть в игре.'''
+        """Возвращает список всех игровых объектов, которые есть в игре."""
         return self._objects
 
     @property
     def used_positions(self) -> list[tuple[int, int]]:
-        '''Возвращает список всех позиций на поле всех игровых объектов.'''
+        """Возвращает список всех позиций на поле всех игровых объектов."""
         positions = list[tuple[int, int]]()
 
         for object in self._objects:
@@ -190,13 +189,13 @@ class GameObjects():
         return positions
 
     def add_object(self, obj: GameObject) -> None:
-        '''Добавляет новый игровой объект в список.'''
+        """Добавляет новый игровой объект в список."""
         self._objects.append(obj)
         # TODO при столкновении со стеной, append получает несколько аргументов
         self._used_positions.extend(obj.positions)
 
     def remove_object(self, obj: GameObject) -> None:
-        '''Удаляет игровой объект из списка.'''
+        """Удаляет игровой объект из списка."""
         if obj not in self._objects:
             return
         else:
@@ -206,12 +205,12 @@ class GameObjects():
                     self._used_positions.remove(position)
 
     def move_objects(self) -> None:
-        '''Двигает все объекты.'''
+        """Двигает все объекты."""
         for object in self._objects:
             object.move()
 
     def dec_lifetime(self) -> None:
-        '''Уменьшает lifetime всех объектов на 1.'''
+        """Уменьшает lifetime всех объектов на 1."""
         for object in self._objects:
 
             # еще живой объект

@@ -11,7 +11,7 @@ from core.consts import (
 
 
 class AppleType(Enum):
-    '''
+    """
     Тип яблока, которое определяет текущее поведение змейки.\n
     :normal: обычное, яблоко +1 к длине змейки\n
     :rotten: гнилое, змейка теряет половину длины, которая становится стеной\n
@@ -19,7 +19,7 @@ class AppleType(Enum):
     :hot: горячее, змейка убегает в обратном
     направлении с удвоенной скоростью\n
     :aid: целительное, отменяет действие drunk
-    '''
+    """
 
     normal = auto()
     rotten = auto()
@@ -35,7 +35,7 @@ APPLE_TYPES_WEIGHTS = (40, 5, 20, 10, 25)
 
 
 class Apple(GameObject):
-    '''Игровой объект яблоко.'''
+    """Игровой объект яблоко."""
 
     # Внесем принципы квантовой механики,
     # пока яблоко не съедено, оно находится в суперпозиции всех 5 типов
@@ -56,21 +56,21 @@ class Apple(GameObject):
         self._is_game_over_on_interception = False
 
     def randomize_position(self) -> None:
-        '''Устанавливает случайную позицию яблока.'''
+        """Устанавливает случайную позицию яблока."""
         self._positions = [(
             randint(0, GRID_WIDTH - 1) * GRID_SIZE,
             randint(0, GRID_HEIGHT - 1) * GRID_SIZE
         )]
 
     def detect_type(self) -> None:
-        '''Определение типа яблока'''
+        """Определение типа яблока"""
         self._type = choices(
             population=APPLE_TYPES,
             weights=APPLE_TYPES_WEIGHTS,
             k=1)[0]
 
     def move(self) -> None:
-        '''В этой игре яблоко не двигается.'''
+        """В этой игре яблоко не двигается."""
         pass
 
     @property

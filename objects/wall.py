@@ -3,7 +3,7 @@ from core.consts import WALL_COLOR, DEFAULT_GAME_OBJECT_LIFETIME
 
 
 class Wall(GameObject):
-    '''Игровой объект стена.'''
+    """Игровой объект стена."""
 
     def __init__(self, positions: list[tuple[int, int]] | None):
         if positions is None:
