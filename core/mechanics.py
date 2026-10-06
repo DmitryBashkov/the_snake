@@ -1,8 +1,6 @@
 import pygame
-from core.consts import (
-    DEFAULT_SPEED,
-)
 
+from core.consts import DEFAULT_SPEED
 
 # Настройка времени:
 clock = pygame.time.Clock()

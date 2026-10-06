@@ -1,13 +1,9 @@
 from enum import Enum, auto
-from objects.game import GameObject
 from random import choices, randint
-from core.consts import (
-    APPLE_COLOR,
-    DEFAULT_GAME_OBJECT_LIFETIME,
-    GRID_HEIGHT,
-    GRID_SIZE,
-    GRID_WIDTH,
-)
+
+from core.consts import (APPLE_COLOR, DEFAULT_GAME_OBJECT_LIFETIME,
+                         GRID_HEIGHT, GRID_SIZE, GRID_WIDTH)
+from objects.game import GameObject
 
 
 class AppleType(Enum):

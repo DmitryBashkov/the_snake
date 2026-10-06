@@ -1,18 +1,15 @@
 from random import randint
 
-from objects.game import GameObject
-from objects.snake import Snake
-from objects.apple import Apple
-from objects.wall import Wall
+import pygame
 
+from core.consts import (DOWN, GRID_HEIGHT, GRID_SIZE, GRID_WIDTH, LEFT,
+                         MAX_APPLES, RIGHT, UP)
 from core.mechanics import Speed
 from core.renderer import Renderer
-from core.consts import (
-    GRID_HEIGHT, GRID_SIZE, GRID_WIDTH, UP, DOWN, LEFT, RIGHT,
-    MAX_APPLES,
-)
-
-import pygame
+from objects.apple import Apple
+from objects.game import GameObject
+from objects.snake import Snake
+from objects.wall import Wall
 
 
 class Game():

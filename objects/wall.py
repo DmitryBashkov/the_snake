@@ -1,5 +1,5 @@
+from core.consts import DEFAULT_GAME_OBJECT_LIFETIME, WALL_COLOR
 from objects.game import GameObject
-from core.consts import WALL_COLOR, DEFAULT_GAME_OBJECT_LIFETIME
 
 
 class Wall(GameObject):
