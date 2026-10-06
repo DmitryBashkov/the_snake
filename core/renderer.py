@@ -29,7 +29,7 @@ class Renderer():
     def _draw_element(self,
                       position: tuple[int, int],
                       color: tuple[int, int, int],
-                      fade: bool = False) -> None:
+                      fade: bool = False) -> None:      # fade используется для прорисовки фона у последнего элемента змейки
         '''Рисует отдельную позицию объекта.'''
 
         rect = pygame.Rect(position, (GRID_SIZE, GRID_SIZE))
@@ -63,7 +63,3 @@ class Renderer():
         '''Рисует все игровые объекты'''
         for object in game_objects:
             self._draw(object.positions, object.body_color)
-
-    def redraw_background(self, position: tuple[int, int]):
-
-        self._draw_element(position, BOARD_BACKGROUND_COLOR, True)

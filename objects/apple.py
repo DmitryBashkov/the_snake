@@ -1,6 +1,7 @@
 from enum import Enum, auto
 from objects.game import GameObject
 from random import choices
+from core.consts import APPLE_COLOR, DEFAULT_GAME_OBJECT_LIFETIME
 
 
 class AppleType(Enum):
@@ -25,11 +26,6 @@ APPLE_TYPES = tuple(AppleType)
 
 # Вевероятности распределены по 50% для плохих и хороших яблок
 APPLE_TYPES_WEIGHTS = (40, 5, 20, 10, 25)
-# APPLE_TYPES_WEIGHTS = (0, 100, 0, 0, 0)
-# APPLE_TYPES_WEIGHTS = (0, 0, 100, 0, 0)
-# APPLE_TYPES_WEIGHTS = (0, 0, 0, 100, 0)
-# APPLE_TYPES_WEIGHTS = (0, 0, 0, 0, 100)
-# APPLE_TYPES_WEIGHTS = (100, 0, 0, 0, 0)
 
 
 class Apple(GameObject):
@@ -40,9 +36,12 @@ class Apple(GameObject):
     _type: AppleType
 
     def __init__(self, positions: list[tuple[int, int]]) -> None:
-        self._body_color = (255, 0, 0)
+
+        # у всех яблок будет один и тот же цвет,
+        # чтобы пользователь не знал, какое яблоко он съел, пока не съест его
+        self._body_color = APPLE_COLOR
         self._positions = positions
-        self.life_time = 500
+        self.life_time = DEFAULT_GAME_OBJECT_LIFETIME
         self._is_game_over_on_interception = False
 
     def detect_type(self) -> None:
@@ -53,8 +52,7 @@ class Apple(GameObject):
             k=1)[0]
 
     def move(self) -> None:
-        '''Яблоко не двигается.'''
-        self.life_time -= 1
+        '''В этой игре яблоко не двигается.'''
         pass
 
     @property

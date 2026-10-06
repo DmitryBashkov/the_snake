@@ -29,7 +29,7 @@ SNAKE_COLOR = (0, 255, 0)
 WALL_COLOR = (150, 150, 150)
 
 # Сколько циклов живет игровой объект
-DEFAULT_GAME_OBJECT_LIFETIME = 100
+DEFAULT_GAME_OBJECT_LIFETIME = 500
 
 # Максимальное количество яблок на поле
 MAX_APPLES = 3

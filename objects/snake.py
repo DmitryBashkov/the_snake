@@ -29,11 +29,9 @@ class Snake(GameObject):
         self.direction = new_direction
 
     def move(self) -> None:
-        '''Движение определяется путем применения
-        направления на все элементы списка
-        позиций по формуле: x + dx + GRID_SIZE\n
-        Если позиция (20,40), а направление (0,-1),
-        то новая позиция будет (20, 20)
+        '''
+        Движение определяется путем добавления новой головы в направлении движения 
+        и удаления последнего элемента змейки, если она не растет (grow == False).
         '''
         new_head = (
             (self.head[0] + self.direction[0] * GRID_SIZE) % SCREEN_WIDTH,
@@ -45,6 +43,7 @@ class Snake(GameObject):
         if not self.grow:
             self._positions.pop(-1)
 
+        # когда змейка подросла, онап перестает расти, пока не съест новое яблоко
         self.grow = False
 
     @property
@@ -80,7 +79,10 @@ class Snake(GameObject):
         return self.head in self._positions
 
     def throw_half(self) -> list[tuple[int, int]] | None:
-        '''Удаляет вторую половину змейки и возвращает ее как результат'''
+        '''
+        Удаляет вторую половину змейки и возвращает ее как результат
+        Применимо для тухлого яблока
+        '''
 
         if self.length < 3:
             return None
@@ -119,26 +121,21 @@ class Snake(GameObject):
         if apple.aid:
             self.last_apple = AppleType.aid
             self.heal()
-            print('aid')
 
         elif apple.rotten:
             self.last_apple = AppleType.rotten
-            print('rotten')
             self.grow = True
             return self.throw_half()
 
         elif apple.hot:
             self.last_apple = AppleType.hot
             self.reverse_snake()
-            print('hot')
 
         elif apple.drunk:
             self.last_apple = AppleType.drunk
             self.drunk()
-            print('drunk')
 
         elif apple.normal:
             self.last_apple = AppleType.normal
-            print('normal')
 
         self.grow = True
