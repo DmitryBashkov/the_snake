@@ -154,8 +154,8 @@ class Game():
         '''Определение случайной позиции для игрового объекта'''
         while True:
             position = [(
-                randint(0, GRID_WIDTH - GRID_SIZE) * GRID_SIZE,
-                randint(0, GRID_HEIGHT - GRID_SIZE) * GRID_SIZE
+                randint(0, GRID_WIDTH) * GRID_SIZE,
+                randint(0, GRID_HEIGHT) * GRID_SIZE
             )]
             if position[0] not in self._game_objects.used_positions:
                 return position
