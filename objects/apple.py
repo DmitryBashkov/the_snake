@@ -12,12 +12,12 @@ from core.consts import (
 
 class AppleType(Enum):
     """
-    Тип яблока, которое определяет текущее поведение змейки.\n
-    :normal: обычное, яблоко +1 к длине змейки\n
-    :rotten: гнилое, змейка теряет половину длины, которая становится стеной\n
-    :drunk: забродившее, змейка меняет направление инверсивно\n
+    Тип яблока, которое определяет текущее поведение змейки.
+    :normal: обычное, яблоко +1 к длине змейки
+    :rotten: гнилое, змейка теряет половину длины, которая становится стеной
+    :drunk: забродившее, змейка меняет направление инверсивно
     :hot: горячее, змейка убегает в обратном
-    направлении с удвоенной скоростью\n
+    направлении с удвоенной скоростью
     :aid: целительное, отменяет действие drunk
     """
 
@@ -42,7 +42,7 @@ class Apple(GameObject):
     _type: AppleType
 
     def __init__(
-        self, positions: list[tuple[int, int]] | None = None
+        self, positions: list[tuple[int, int]] | None = None,
     ) -> None:
 
         # у всех яблок будет один и тот же цвет,
@@ -59,7 +59,7 @@ class Apple(GameObject):
         """Устанавливает случайную позицию яблока."""
         self._positions = [(
             randint(0, GRID_WIDTH - 1) * GRID_SIZE,
-            randint(0, GRID_HEIGHT - 1) * GRID_SIZE
+            randint(0, GRID_HEIGHT - 1) * GRID_SIZE,
         )]
 
     def detect_type(self) -> None:
@@ -75,20 +75,25 @@ class Apple(GameObject):
 
     @property
     def normal(self) -> bool:
+        """Возвращает true, если яблоко normal."""
         return self._type is AppleType.normal
 
     @property
     def rotten(self) -> bool:
+        """Возвращает true, если яблоко rotten."""
         return self._type is AppleType.rotten
 
     @property
     def drunk(self) -> bool:
+        """Возвращает true, если яблоко drunk."""
         return self._type is AppleType.drunk
 
     @property
     def aid(self) -> bool:
+        """Возвращает true, если яблоко aid."""
         return self._type is AppleType.aid
 
     @property
     def hot(self) -> bool:
+        """Возвращает true, если яблоко hot."""
         return self._type is AppleType.hot
