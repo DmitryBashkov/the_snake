@@ -1,35 +1,23 @@
 from core.consts import (
     BOARD_BACKGROUND_COLOR,
-    DOWN,
-    GRID_HEIGHT,
-    GRID_SIZE,
-    GRID_WIDTH,
-    LEFT,
-    RIGHT,
-    SCREEN_HEIGHT,
-    SCREEN_WIDTH,
-    UP,
+    DOWN, LEFT, RIGHT, UP,
+    GRID_HEIGHT, GRID_WIDTH, GRID_SIZE,
+    SCREEN_HEIGHT, SCREEN_WIDTH,
 )
 from core.game import Game
+
 from objects.apple import Apple
 from objects.game import GameObject
 from objects.snake import Snake
+
 import pygame
 
 __all__ = (
-    'Apple',
+    'GameObject', 'Apple', 'Snake',
     'BOARD_BACKGROUND_COLOR',
-    'DOWN',
-    'GameObject',
-    'GRID_HEIGHT',
-    'GRID_SIZE',
-    'GRID_WIDTH',
-    'LEFT',
-    'RIGHT',
-    'SCREEN_HEIGHT',
-    'SCREEN_WIDTH',
-    'Snake',
-    'UP',
+    'DOWN', 'UP', 'LEFT', 'RIGHT',
+    'GRID_HEIGHT', 'GRID_WIDTH', 'GRID_SIZE',
+    'SCREEN_HEIGHT', 'SCREEN_WIDTH',
     'clock',
     'handle_keys',
     'main',
