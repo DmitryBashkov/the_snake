@@ -42,9 +42,9 @@ screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT), 0, 32)
 clock = pygame.time.Clock()
 
 
-def handle_keys(snake):
+def handle_keys(game: Game, snake: Snake):
     '''Обрабатывает нажатия клавиш.'''
-    Game.handle_keys(None, snake)
+    Game.handle_keys(game, snake)
 
 
 def main():
