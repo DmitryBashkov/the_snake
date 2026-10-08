@@ -44,8 +44,6 @@ class Game:
 
     def tick(self) -> bool:
         """Один игровой цикл. Возвращает True, если игра продолжается"""
-        # TODO: добавить обработку lifetime
-
         self.handle_keys(self._snake)
 
         # Для масштабируемости:
@@ -97,8 +95,7 @@ class Game:
 
             return True
 
-        else:
-            return False
+        return False
 
     def _has_interception(self) -> GameObject | None:
         """Возвращает объект, с которым произошло столкноввение.
@@ -203,18 +200,17 @@ class GameObjects:
     def add_object(self, obj: GameObject) -> None:
         """Добавляет новый игровой объект в список."""
         self._objects.append(obj)
-        # TODO при столкновении со стеной, append получает несколько аргументов
         self._used_positions.extend(obj.positions)
 
     def remove_object(self, obj: GameObject) -> None:
         """Удаляет игровой объект из списка."""
         if obj not in self._objects:
             return
-        else:
-            self._objects.remove(obj)
-            for position in obj.positions:
-                if position in self._used_positions:
-                    self._used_positions.remove(position)
+        
+        self._objects.remove(obj)
+        for position in obj.positions:
+            if position in self._used_positions:
+                self._used_positions.remove(position)
 
     def move_objects(self) -> None:
         """Двигает все объекты."""
