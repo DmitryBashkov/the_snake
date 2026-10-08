@@ -1,33 +1,28 @@
+from core.consts import (
+    BOARD_BACKGROUND_COLOR,
+    DEFAULT_START_POSITION,
+    NO_LIFETIME,
+)
+
+
 class GameObject:
     """Базовый игровой объект."""
 
-    _positions: list[tuple[int, int]]
-    _body_color: tuple[int, int, int]
-    life_time: int
-    _moving_object: bool
-    _is_game_over_on_interception: bool
-
     def __init__(
         self,
-        position: tuple[int, int] | None = None,
-        body_color: tuple[int, int, int] = (0, 0, 0),
+        positions: list[tuple[int, int]] = [DEFAULT_START_POSITION],
+        body_color: tuple[int, int, int] = BOARD_BACKGROUND_COLOR,
     ) -> None:
-        if position is None:
-            position = (0, 0)
-        self._positions = [position]
+
+        self._positions = positions
         self._body_color = body_color
-        self.life_time = -1
+        self.life_time = NO_LIFETIME
         self._moving_object = False
         self._is_game_over_on_interception = False
 
     def dec_lifetime(self) -> None:
         """Уменьшает lifetime объекта на 1."""
         self.life_time -= 1
-
-    @property
-    def position(self) -> tuple[int, int]:
-        """Возвращает позицию объекта."""
-        return self._positions[0]
 
     @property
     def positions(self) -> list[tuple[int, int]]:
@@ -51,8 +46,12 @@ class GameObject:
 
     def draw(self) -> None:
         """Отрисовывает объект на экране."""
-        pass
+        raise NotImplementedError(
+            f'Не определен метод draw класса {type(self).__name__}',
+        )
 
-    def move(self):
+    def move(self) -> None:
         """Описывает дивжение объекта."""
-        pass
+        raise NotImplementedError(
+            f'Не определен метод move класса {type(self).__name__}',
+        )

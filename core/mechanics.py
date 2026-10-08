@@ -7,31 +7,31 @@ clock = pygame.time.Clock()
 
 
 class Speed:
-    """Скорость движения змейки"""
+    """Скорость движения змейки."""
 
     _speed: int
 
-    def __init__(self):
-        self._speed = 20
+    def __init__(self) -> None:
+        self._speed = DEFAULT_SPEED
 
-    def inc(self, value: int = 20):
+    def inc(self, value: int = 20) -> None:
         """Увеличение скорости. По дефолту на +20"""
         self._speed += value
 
-    def dec(self, value: int = 20):
+    def dec(self, value: int = 20) -> None:
         """Уменьшение скорости. По дефолту на -20"""
         self._speed -= value
 
-    def set_default(self):
+    def set_default(self) -> None:
         """Устанавливаем дефолтную скорость игры"""
         self._speed = DEFAULT_SPEED
 
-    def __int__(self):
+    def __int__(self) -> int:
         """Возвращает скорость в виде int"""
         return self._speed
 
     @property
-    def value(self):
+    def value(self) -> int:
         """Свойство. Возвращает скорость в виде int"""
         return self._speed
 

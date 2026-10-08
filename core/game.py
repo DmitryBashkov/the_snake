@@ -6,7 +6,7 @@ from core.consts import (DOWN, GRID_HEIGHT, GRID_SIZE, GRID_WIDTH, LEFT,
                          MAX_APPLES, RIGHT, UP)
 from core.mechanics import Speed
 from core.renderer import Renderer
-from objects.apple import Apple
+from objects.apple import Apple, AppleType
 from objects.game import GameObject
 from objects.snake import Snake
 from objects.wall import Wall
@@ -84,14 +84,24 @@ class Game:
 
                 interception_object.detect_type()
 
-                is_wall = self._snake.eat(interception_object)
+                if interception_object.type == AppleType.hot:
+                    self.speed.inc()
+                else:
+                    self.speed.set_default()
+
+                is_wall = self._snake.eat(interception_object.type)
                 if is_wall:
                     wall = Wall(is_wall)
                     self._game_objects.add_object(wall)
 
                 self._game_objects.remove_object(interception_object)
-                self._apple = Apple(self.gen_rand_pos())
-                self._game_objects.add_object(self._apple)
+
+                for _ in range(
+                    MAX_APPLES - self._game_objects.apple_qty,
+                    0,
+                    -1,
+                ):
+                    self._game_objects.add_object(Apple(self.gen_rand_pos()))
 
             return True
 
@@ -148,10 +158,13 @@ class Game:
 
                 if event.key == pygame.K_UP and not snake.axis_vert:
                     snake.update_direction(DOWN if snake.reverse else UP)
+
                 elif event.key == pygame.K_DOWN and not snake.axis_vert:
                     snake.update_direction(UP if snake.reverse else DOWN)
+
                 elif event.key == pygame.K_LEFT and not snake.axis_horizon:
                     snake.update_direction(RIGHT if snake.reverse else LEFT)
+
                 elif event.key == pygame.K_RIGHT and not snake.axis_horizon:
                     snake.update_direction(LEFT if snake.reverse else RIGHT)
 
@@ -189,6 +202,11 @@ class GameObjects:
         return self._objects
 
     @property
+    def apple_qty(self) -> int:
+        """Считает количество яблок в игре."""
+        return sum(isinstance(obj, Apple) for obj in self._objects)
+
+    @property
     def used_positions(self) -> list[tuple[int, int]]:
         """Возвращает список всех позиций на поле всех игровых объектов."""
         positions = list[tuple[int, int]]()
@@ -206,7 +224,7 @@ class GameObjects:
         """Удаляет игровой объект из списка."""
         if obj not in self._objects:
             return
-        
+
         self._objects.remove(obj)
         for position in obj.positions:
             if position in self._used_positions:

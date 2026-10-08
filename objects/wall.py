@@ -5,7 +5,11 @@ from objects.game import GameObject
 class Wall(GameObject):
     """Игровой объект стена."""
 
-    def __init__(self, positions: list[tuple[int, int]] | None):
+    def __init__(
+            self,
+            positions: list[tuple[int, int]] | None,
+    ):
+
         if positions is not None:
             self._positions = positions
             self._body_color = WALL_COLOR

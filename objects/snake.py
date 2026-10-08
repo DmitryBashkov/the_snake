@@ -1,5 +1,10 @@
-from core.consts import GRID_SIZE, SCREEN_HEIGHT, SCREEN_WIDTH, SNAKE_COLOR
-from objects.apple import Apple, AppleType
+from core.consts import (
+    GRID_SIZE,
+    RIGHT,
+    SCREEN_HEIGHT, SCREEN_WIDTH,
+    SNAKE_COLOR,
+)
+from objects.apple import AppleType
 from objects.game import GameObject
 
 
@@ -11,15 +16,20 @@ class Snake(GameObject):
     direction: tuple[int, int]
 
     def __init__(self) -> None:
+
+        # аттрибуты родительского класса
+        super().__init__(
+            body_color=SNAKE_COLOR,
+        )
+
+        self._moving_object = True
+        self._is_game_over_on_interception = True
+
+        # атрибуты, относящиеся к конкретному классу
         self._length = 1
         self.grow = False
         self.reverse = False
-        self._positions = [(0, 0)]
-        self._body_color = SNAKE_COLOR
-        self.direction = (1, 0)
-        self._moving_object = True
-        self._is_game_over_on_interception = True
-        self.life_time = -1
+        self.direction = RIGHT
 
     def update_direction(self, new_direction: tuple[int, int]) -> None:
         """Обновляет направление движения змейки."""
@@ -28,13 +38,6 @@ class Snake(GameObject):
     def get_head_position(self) -> tuple[int, int]:
         """Возвращает позицию головы змейки."""
         return self.head
-
-    def reset(self) -> None:
-        """Сбрасывает змейку в начальное состояние."""
-        self._positions = [(0, 0)]
-        self.direction = (1, 0)
-        self.grow = False
-        self.reverse = False
 
     def move(self) -> None:
         """
@@ -126,36 +129,38 @@ class Snake(GameObject):
         """Меняет местами кнпки управления движением змейки."""
         self.reverse = True
 
-    def heal(self):
+    def heal(self) -> None:
         """Восстанавливает здоровье змейки,
         если она была повреждена тухлым яблоком.
         """
         self.reverse = False
 
-    def eat(self, apple: Apple):
+    def eat(self, apple_type: AppleType) -> list[tuple[int, int]] | None:
         r"""Определяет, что происходит со змейкой после поедания яблока.
         Если съел гнилое яблоко, то выозвращает половину тела.
         В остальнух случаях вовзращает None.
         """
-        if apple.aid:
-            self.last_apple = AppleType.aid
-            self.heal()
+        match apple_type:
 
-        elif apple.rotten:
-            self.last_apple = AppleType.rotten
-            self.grow = True
-            return self.throw_half()
+            case AppleType.aid:
+                self.last_apple = AppleType.aid
+                self.heal()
 
-        elif apple.hot:
-            self.last_apple = AppleType.hot
-            self.reverse_snake()
+            case AppleType.rotten:
+                self.last_apple = AppleType.rotten
+                self.grow = True
+                return self.throw_half()
 
-        elif apple.drunk:
-            self.last_apple = AppleType.drunk
-            self.drunk()
+            case AppleType.hot:
+                self.last_apple = AppleType.hot
+                self.reverse_snake()
 
-        elif apple.normal:
-            self.last_apple = AppleType.normal
+            case AppleType.drunk:
+                self.last_apple = AppleType.drunk
+                self.drunk()
+
+            case AppleType.normal:
+                self.last_apple = AppleType.normal
 
         self.grow = True
         return None
