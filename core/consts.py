@@ -28,6 +28,12 @@ SNAKE_COLOR = (0, 255, 0)
 # Цвет стены
 WALL_COLOR = (150, 150, 150)
 
+RED = (255, 0, 0)
+
+GREEN = (255, 0, 0)
+
+BLUE = (255, 0, 0)
+
 # Сколько циклов живет игровой объект
 DEFAULT_GAME_OBJECT_LIFETIME = 500
 

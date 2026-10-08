@@ -5,7 +5,7 @@ from core.consts import (BOARD_BACKGROUND_COLOR, BORDER_COLOR, GAME_NAME,
 from objects.game import GameObject
 
 
-class Renderer():
+class Renderer:
     """Класс для отрисовки объектов на экране."""
 
     screen: pygame.Surface

@@ -12,7 +12,7 @@ from objects.snake import Snake
 from objects.wall import Wall
 
 
-class Game():
+class Game:
     """Класс для управления игрой."""
 
     def __init__(self):
@@ -177,7 +177,7 @@ class Game():
                 return position
 
 
-class GameObjects():
+class GameObjects:
     """Класс для управления списком игровых объектов.
     Такими, добавление объектов, удаления итд.
     """

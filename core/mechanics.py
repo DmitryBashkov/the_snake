@@ -6,7 +6,7 @@ from core.consts import DEFAULT_SPEED
 clock = pygame.time.Clock()
 
 
-class Speed():
+class Speed:
     """Скорость движения змейки"""
 
     _speed: int
