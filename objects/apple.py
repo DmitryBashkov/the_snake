@@ -37,7 +37,7 @@ class Apple(GameObject):
         # какое яблоко он съел, пока не съест его
         if positions is None:
             positions = [DEFAULT_START_POSITION]
-        
+
         super().__init__(
             positions=positions,
             body_color=APPLE_COLOR,
