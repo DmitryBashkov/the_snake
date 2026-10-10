@@ -52,7 +52,7 @@ class Renderer:
     def _draw(self,
               positions: list[tuple[int, int]],
               color: tuple[int, int, int]) -> None:
-        """Рисует игровой объект"""
+        """Рисует игровой объект."""
         for position in positions:
             self._draw_element(position, color)
 
@@ -61,6 +61,6 @@ class Renderer:
         pygame.display.update()
 
     def draw_objects(self, game_objects: list[GameObject]) -> None:
-        """Рисует все игровые объекты"""
+        """Рисует все игровые объекты."""
         for obj in game_objects:
             self._draw(obj.positions, obj.body_color)

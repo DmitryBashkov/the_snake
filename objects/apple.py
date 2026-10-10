@@ -8,14 +8,7 @@ from objects.game import GameObject
 
 
 class AppleType(Enum):
-    r"""Тип яблока, которое определяет текущее поведение змейки.\n
-    :normal: обычное, яблоко +1 к длине змейки\n
-    :rotten: гнилое, змейка теряет половину длины, которая становится стеной\n
-    :drunk: забродившее, змейка меняет направление инверсивно\n
-    :hot: горячее, змейка убегает в обратном
-    направлении с удвоенной скоростью\n
-    :aid: целительное, отменяет действие drunk
-    """
+    """Тип яблока, которое определяет текущее поведение змейки."""
 
     normal = auto()
     rotten = auto()
@@ -58,7 +51,7 @@ class Apple(GameObject):
         )]
 
     def detect_type(self) -> None:
-        """Определение типа яблока"""
+        """Определение типа яблока."""
         self.type = choices(
             population=APPLE_TYPES,
             weights=APPLE_TYPES_WEIGHTS,

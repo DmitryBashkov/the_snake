@@ -23,7 +23,7 @@ class GameObject:
 
     @property
     def positions(self) -> list[tuple[int, int]]:
-        """Возвращает список позиций"""
+        """Возвращает список позиций."""
         return self._positions
 
     @property

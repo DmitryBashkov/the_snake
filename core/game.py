@@ -33,7 +33,7 @@ class Game:
         self._running = True
 
     def stop(self):
-        """Устанавливаем _running = False"""
+        """Устанавливаем _running = False."""
         self._running = False
 
     @property
@@ -42,7 +42,7 @@ class Game:
         return self._running
 
     def tick(self) -> bool:
-        """Один игровой цикл. Возвращает True, если игра продолжается"""
+        """Один игровой цикл. Возвращает True, если игра продолжается."""
         self.handle_events()
 
         # Для масштабируемости:
