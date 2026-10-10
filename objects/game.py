@@ -8,11 +8,14 @@ class GameObject:
     def __init__(
         self,
         positions: list[tuple[int, int]] | None,
-        body_color: tuple[int, int, int] = BOARD_BACKGROUND_COLOR,
+        body_color: tuple[int, int, int] | None,
     ) -> None:
 
         if positions is None:
             positions = [DEFAULT_START_POSITION]
+
+        if body_color is None:
+            body_color = BOARD_BACKGROUND_COLOR
 
         self._positions = positions
         self._body_color = body_color
