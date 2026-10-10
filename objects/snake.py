@@ -1,4 +1,6 @@
-from core.consts import GRID_SIZE, SCREEN_HEIGHT, SCREEN_WIDTH, SNAKE_COLOR
+
+from core.consts import (DEFAULT_START_POSITION, GRID_SIZE, SCREEN_HEIGHT,
+                         SCREEN_WIDTH, SNAKE_COLOR)
 from core.mechanics import Direction
 from objects.apple import AppleType
 from objects.game import GameObject
@@ -11,6 +13,7 @@ class Snake(GameObject):
 
         # аттрибуты родительского класса
         super().__init__(
+            positions=[DEFAULT_START_POSITION],
             body_color=SNAKE_COLOR,
         )
 
