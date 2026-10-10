@@ -1,8 +1,5 @@
-from core.consts import (
-    BOARD_BACKGROUND_COLOR,
-    DEFAULT_START_POSITION,
-    NO_LIFETIME,
-)
+from core.consts import (BOARD_BACKGROUND_COLOR, DEFAULT_START_POSITION,
+                         NO_LIFETIME)
 
 
 class GameObject:

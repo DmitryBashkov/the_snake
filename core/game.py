@@ -2,7 +2,7 @@ from random import randint
 
 import pygame
 
-from core.consts import (GRID_HEIGHT, GRID_SIZE, GRID_WIDTH, MAX_APPLES)
+from core.consts import GRID_HEIGHT, GRID_SIZE, GRID_WIDTH, MAX_APPLES
 from core.mechanics import Direction, Speed
 from core.renderer import Renderer
 from objects.apple import Apple, AppleType

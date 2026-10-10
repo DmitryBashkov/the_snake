@@ -1,7 +1,5 @@
-from pygame import (
-    K_UP, K_DOWN, K_LEFT, K_RIGHT,
-    K_w, K_s, K_a, K_d,
-)
+from pygame import K_DOWN, K_LEFT, K_RIGHT, K_UP, K_a, K_d, K_s, K_w
+
 GAME_NAME = 'Змейка отрывается в выходные'
 
 # размеры экрана и игрового поля
@@ -28,7 +26,7 @@ SNAKE_COLOR = (0, 255, 0)
 # Цвет стены
 WALL_COLOR = (150, 150, 150)
 
-# красный цвет 
+# красный цвет
 RED = (255, 0, 0)
 
 # зеленый цвет

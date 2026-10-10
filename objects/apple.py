@@ -2,8 +2,7 @@ from enum import Enum, auto
 from random import choices, randint
 
 from core.consts import (APPLE_COLOR, APPLE_TYPES_WEIGHTS,
-                         DEFAULT_GAME_OBJECT_LIFETIME,
-                         DEFAULT_START_POSITION,
+                         DEFAULT_GAME_OBJECT_LIFETIME, DEFAULT_START_POSITION,
                          GRID_HEIGHT, GRID_SIZE, GRID_WIDTH)
 from objects.game import GameObject
 
@@ -36,12 +35,12 @@ class Apple(GameObject):
     type: AppleType
 
     def __init__(
-        self, 
+        self,
         positions: list[tuple[int, int]] = [DEFAULT_START_POSITION],
     ) -> None:
 
         # у всех яблок будет один и тот же цвет,
-        # чтобы пользователь не знал, 
+        # чтобы пользователь не знал,
         # какое яблоко он съел, пока не съест его
 
         super().__init__(

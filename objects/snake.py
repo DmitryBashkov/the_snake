@@ -1,11 +1,7 @@
-from core.consts import (
-    GRID_SIZE,
-    SCREEN_HEIGHT, SCREEN_WIDTH,
-    SNAKE_COLOR,
-)
+from core.consts import GRID_SIZE, SCREEN_HEIGHT, SCREEN_WIDTH, SNAKE_COLOR
+from core.mechanics import Direction
 from objects.apple import AppleType
 from objects.game import GameObject
-from core.mechanics import Direction
 
 
 class Snake(GameObject):
@@ -50,8 +46,14 @@ class Snake(GameObject):
         если она не растет (grow == False).
         """
         new_head = (
-            (self.head[0] + self.direction.vector[0] * GRID_SIZE) % SCREEN_WIDTH,
-            (self.head[1] + self.direction.vector[1] * GRID_SIZE) % SCREEN_HEIGHT,
+            (
+                self.head[0]
+                + self.direction.vector[0] * GRID_SIZE
+            ) % SCREEN_WIDTH,
+            (
+                self.head[1]
+                + self.direction.vector[1] * GRID_SIZE
+            ) % SCREEN_HEIGHT,
         )
 
         self._positions.insert(0, new_head)
