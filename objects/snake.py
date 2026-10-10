@@ -41,6 +41,13 @@ class Snake(GameObject):
         """Возвращает позицию головы змейки."""
         return self.head
 
+    def reset(self) -> None:
+        """Сбрасывает змейку в начальное состояние."""
+        self._positions = [(0, 0)]
+        self.direction = Direction.RIGHT
+        self.grow = False
+        self.reverse = False
+
     def move(self) -> None:
         """Движение определяется путем добавления
         новой головы в направлении движения
