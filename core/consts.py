@@ -1,3 +1,7 @@
+from pygame import (
+    K_UP, K_DOWN, K_LEFT, K_RIGHT,
+    K_w, K_s, K_a, K_d,
+)
 GAME_NAME = 'Змейка отрывается в выходные'
 
 # размеры экрана и игрового поля
@@ -5,12 +9,6 @@ SCREEN_WIDTH, SCREEN_HEIGHT = 640, 480
 GRID_SIZE = 20
 GRID_WIDTH = SCREEN_WIDTH // GRID_SIZE
 GRID_HEIGHT = SCREEN_HEIGHT // GRID_SIZE
-
-# Направления движения:
-UP = (0, -1)
-DOWN = (0, 1)
-LEFT = (-1, 0)
-RIGHT = (1, 0)
 
 # дефолтная скорость змейки
 DEFAULT_SPEED = 20
@@ -53,3 +51,9 @@ NO_LIFETIME = -1
 
 # Вевероятности распределены по 50% для плохих и хороших яблок
 APPLE_TYPES_WEIGHTS = (40, 5, 20, 10, 25)
+
+# Кнопки управления. Можно добавлять или убират
+UP_KEYS = (K_UP, K_w)
+DOWN_KEYS = (K_DOWN, K_s)
+LEFT_KEYS = (K_LEFT, K_a)
+RIGHT_KEY = (K_RIGHT, K_d)

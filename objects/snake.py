@@ -1,19 +1,15 @@
 from core.consts import (
     GRID_SIZE,
-    RIGHT,
     SCREEN_HEIGHT, SCREEN_WIDTH,
     SNAKE_COLOR,
 )
 from objects.apple import AppleType
 from objects.game import GameObject
+from core.mechanics import Direction
 
 
 class Snake(GameObject):
     """Игровой объект змейка."""
-
-    # игра начинается с обычной змейкой
-    last_apple: AppleType = AppleType.normal
-    direction: tuple[int, int]
 
     def __init__(self) -> None:
 
@@ -22,18 +18,25 @@ class Snake(GameObject):
             body_color=SNAKE_COLOR,
         )
 
-        self._moving_object = True
-        self._is_game_over_on_interception = True
+        self._moving_object: bool = True
+        self._is_game_over_on_interception: bool = True
 
         # атрибуты, относящиеся к конкретному классу
-        self._length = 1
-        self.grow = False
-        self.reverse = False
-        self.direction = RIGHT
+        self._length: int = 1
+        self.grow: bool = False
+        self.reverse: bool = False
+        self.direction = Direction.RIGHT
+        self.last_apple: AppleType = AppleType.normal
 
-    def update_direction(self, new_direction: tuple[int, int]) -> None:
+    def update_direction(self, direction: Direction) -> None:
         """Обновляет направление движения змейки."""
-        self.direction = new_direction
+        if self.axis_horizon == direction.horizontal:
+            return None
+
+        if self.axis_vert == direction.vertical:
+            return None
+
+        self.direction = direction.opp if self.reverse else direction
 
     def get_head_position(self) -> tuple[int, int]:
         """Возвращает позицию головы змейки."""
@@ -47,8 +50,8 @@ class Snake(GameObject):
         если она не растет (grow == False).
         """
         new_head = (
-            (self.head[0] + self.direction[0] * GRID_SIZE) % SCREEN_WIDTH,
-            (self.head[1] + self.direction[1] * GRID_SIZE) % SCREEN_HEIGHT,
+            (self.head[0] + self.direction.vector[0] * GRID_SIZE) % SCREEN_WIDTH,
+            (self.head[1] + self.direction.vector[1] * GRID_SIZE) % SCREEN_HEIGHT,
         )
 
         self._positions.insert(0, new_head)
@@ -68,12 +71,12 @@ class Snake(GameObject):
     @property
     def axis_horizon(self) -> bool:
         """Возвращает true, если змейка движется по горизонтали."""
-        return self.direction[0] != 0
+        return self.direction.vector[0] != 0
 
     @property
     def axis_vert(self) -> bool:
         """Возвращает true, если змейка движется по вертикали."""
-        return self.direction[1] != 0
+        return self.direction.vector[1] != 0
 
     def is_last(self, position: tuple[int, int]) -> bool:
         """Возвращает true,
@@ -118,12 +121,7 @@ class Snake(GameObject):
     def reverse_snake(self) -> None:
         """Меняет направление змейки на противоположное."""
         self._positions.reverse()
-        self.update_direction(
-            (
-                -self.direction[0] if self.axis_horizon else self.direction[0],
-                -self.direction[1] if self.axis_vert else self.direction[1],
-            ),
-        )
+        self.direction = self.direction.opp
 
     def drunk(self) -> None:
         """Меняет местами кнпки управления движением змейки."""

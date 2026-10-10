@@ -2,9 +2,8 @@ from random import randint
 
 import pygame
 
-from core.consts import (DOWN, GRID_HEIGHT, GRID_SIZE, GRID_WIDTH, LEFT,
-                         MAX_APPLES, RIGHT, UP)
-from core.mechanics import Speed
+from core.consts import (GRID_HEIGHT, GRID_SIZE, GRID_WIDTH, MAX_APPLES)
+from core.mechanics import Direction, Speed
 from core.renderer import Renderer
 from objects.apple import Apple, AppleType
 from objects.game import GameObject
@@ -44,7 +43,7 @@ class Game:
 
     def tick(self) -> bool:
         """Один игровой цикл. Возвращает True, если игра продолжается"""
-        self.handle_keys(self._snake)
+        self.handle_events()
 
         # Для масштабируемости:
         # все объекты, которые должны двигаться, делают шаг
@@ -124,49 +123,44 @@ class Game:
         """Останавливает игру."""
         self.stop()
 
-    def handle_keys(self, snake: Snake):
+    def handle_events(self) -> None:
         """Обрабатывает нажатия клавиш."""
+        # есть баг, что если быстро нажать кнопки управления,
+        # то за один тик змейка может обойти ограничения
+        # на противоположные направления и врезаться сама в себя
+        pressed: bool = False
+
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
-                pygame.quit()
-                raise SystemExit
+                self.stop()
 
-            if event.type == pygame.KEYDOWN:
+            if event.type == pygame.KEYDOWN and not pressed:
+                pressed = True
+                self.handle_keys(event.key)
 
-                """
-                дальше очень хреновая логика,
-                которая меняет направление змейки в зависимости от того,
-                в каком состоянии она находится (reverse = True/False)
-                Вдобавок ей надо проверять, что при реверсе кнопок управления,
-                змейка не может двигаться в противоположном направлении
-                иначе она столкнется сама с собой
-                Такая хуйня, собачка
+                if event.key == pygame.K_ESCAPE:
+                    self.stop()
+                    return
 
-                И чтобы нас не ругал преподаватель за слишком сложное изложение
-                мы попробуем оправдаться новыми функциями
-                в классе змейки axis_horizontal и axis_vertical,
-                которые возвращают true / false
-                и щепоткой кода в update_direction
+    def handle_keys(self, key: int):
+        """Обработчик нажатия кнопок."""
+        direction = Direction.from_keys(key)
 
-                Логика такая. Если нажата кнопка,
-                и направление змейки не в одной оси с кнопкой,
-                то обновляем направление.
+        if direction:
+            self._snake.update_direction(direction)
+            # self._snake.update_direction()
 
-                При этом, если включен реверс,
-                то направление меняется на противоположное.
-                """
+            # if event.key == pygame.K_UP and not snake.axis_vert:
+            #     snake.update_direction(DOWN if snake.reverse else UP)
 
-                if event.key == pygame.K_UP and not snake.axis_vert:
-                    snake.update_direction(DOWN if snake.reverse else UP)
+            # elif event.key == pygame.K_DOWN and not snake.axis_vert:
+            #     snake.update_direction(UP if snake.reverse else DOWN)
 
-                elif event.key == pygame.K_DOWN and not snake.axis_vert:
-                    snake.update_direction(UP if snake.reverse else DOWN)
+            # elif event.key == pygame.K_LEFT and not snake.axis_horizon:
+            #     snake.update_direction(RIGHT if snake.reverse else LEFT)
 
-                elif event.key == pygame.K_LEFT and not snake.axis_horizon:
-                    snake.update_direction(RIGHT if snake.reverse else LEFT)
-
-                elif event.key == pygame.K_RIGHT and not snake.axis_horizon:
-                    snake.update_direction(LEFT if snake.reverse else RIGHT)
+            # elif event.key == pygame.K_RIGHT and not snake.axis_horizon:
+            #     snake.update_direction(LEFT if snake.reverse else RIGHT)
 
     def gen_rand_pos(self) -> list[tuple[int, int]]:
         """
