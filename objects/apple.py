@@ -25,17 +25,19 @@ class Apple(GameObject):
 
     # Внесем принципы квантовой механики,
     # пока яблоко не съедено, оно находится в суперпозиции всех 5 типов
-    type: AppleType
+    apple_type: AppleType
 
     def __init__(
         self,
-        positions: list[tuple[int, int]] = [DEFAULT_START_POSITION],
+        positions: list[tuple[int, int]] | None,
     ) -> None:
 
         # у всех яблок будет один и тот же цвет,
         # чтобы пользователь не знал,
         # какое яблоко он съел, пока не съест его
-
+        if positions is None:
+            positions = [DEFAULT_START_POSITION]
+        
         super().__init__(
             positions=positions,
             body_color=APPLE_COLOR,
@@ -52,7 +54,7 @@ class Apple(GameObject):
 
     def detect_type(self) -> None:
         """Определение типа яблока."""
-        self.type = choices(
+        self.apple_type = choices(
             population=APPLE_TYPES,
             weights=APPLE_TYPES_WEIGHTS,
             k=1)[0]
@@ -64,24 +66,24 @@ class Apple(GameObject):
     @property
     def normal(self) -> bool:
         """Возвращает true, если яблоко нормальное."""
-        return self.type is AppleType.normal
+        return self.apple_type is AppleType.normal
 
     @property
     def rotten(self) -> bool:
         """Возвращает true, если яблоко гнилое."""
-        return self.type is AppleType.rotten
+        return self.apple_type is AppleType.rotten
 
     @property
     def drunk(self) -> bool:
         """Возвращает true, если яблоко забродившее."""
-        return self.type is AppleType.drunk
+        return self.apple_type is AppleType.drunk
 
     @property
     def aid(self) -> bool:
         """Возвращает true, если яблоко целительное."""
-        return self.type is AppleType.aid
+        return self.apple_type is AppleType.aid
 
     @property
     def hot(self) -> bool:
         """Возвращает true, если яблоко острое."""
-        return self.type is AppleType.hot
+        return self.apple_type is AppleType.hot

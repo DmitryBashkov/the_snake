@@ -83,12 +83,12 @@ class Game:
 
                 interception_object.detect_type()
 
-                if interception_object.type == AppleType.hot:
+                if interception_object.apple_type == AppleType.hot:
                     self.speed.inc()
                 else:
                     self.speed.set_default()
 
-                is_wall = self._snake.eat(interception_object.type)
+                is_wall = self._snake.eat(interception_object.apple_type)
                 if is_wall:
                     wall = Wall(is_wall)
                     self._game_objects.add_object(wall)
@@ -148,19 +148,6 @@ class Game:
 
         if direction:
             self._snake.update_direction(direction)
-            # self._snake.update_direction()
-
-            # if event.key == pygame.K_UP and not snake.axis_vert:
-            #     snake.update_direction(DOWN if snake.reverse else UP)
-
-            # elif event.key == pygame.K_DOWN and not snake.axis_vert:
-            #     snake.update_direction(UP if snake.reverse else DOWN)
-
-            # elif event.key == pygame.K_LEFT and not snake.axis_horizon:
-            #     snake.update_direction(RIGHT if snake.reverse else LEFT)
-
-            # elif event.key == pygame.K_RIGHT and not snake.axis_horizon:
-            #     snake.update_direction(LEFT if snake.reverse else RIGHT)
 
     def gen_rand_pos(self) -> list[tuple[int, int]]:
         """

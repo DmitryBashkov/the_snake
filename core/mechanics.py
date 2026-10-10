@@ -56,7 +56,7 @@ class Direction(Enum):
         self._keys = keys
 
     @property
-    def opp(self) -> "Direction":
+    def opp(self) -> 'Direction':
         """Вовзарщает обратное направдление."""
         return {
             Direction.UP: Direction.DOWN,
@@ -86,7 +86,7 @@ class Direction(Enum):
         return self._vector
 
     @classmethod
-    def from_keys(cls, key: int) -> Direction | None:
+    def from_keys(cls, key: int) -> 'Direction | None':
         """По кнопка определяет вектор направления."""
         for direction in cls:
             if key in direction.keys:
@@ -94,7 +94,7 @@ class Direction(Enum):
         return None
 
     @classmethod
-    def from_vector(cls, vector: tuple[int, int]) -> Direction | None:
+    def from_vector(cls, vector: tuple[int, int]) -> 'Direction | None':
         """По вектору определяет направление."""
         for direction in cls:
             if vector == direction.vector:
