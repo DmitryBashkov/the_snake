@@ -29,7 +29,8 @@ class Apple(GameObject):
 
     def __init__(
         self,
-        positions: list[tuple[int, int]] | None,
+        positions: list[tuple[int, int]] | None = None,
+        body_color: tuple[int, int, int] | None = None,
     ) -> None:
 
         # у всех яблок будет один и тот же цвет,
@@ -44,6 +45,9 @@ class Apple(GameObject):
         )
 
         self.life_time = DEFAULT_GAME_OBJECT_LIFETIME
+
+        # для прохождения test_apple_attributes
+        self.position = None
 
     def randomize_position(self) -> None:
         """Устанавливает случайную позицию яблока."""

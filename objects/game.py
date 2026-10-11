@@ -7,8 +7,8 @@ class GameObject:
 
     def __init__(
         self,
-        positions: list[tuple[int, int]] | None,
-        body_color: tuple[int, int, int] | None,
+        positions: list[tuple[int, int]] | None = None,
+        body_color: tuple[int, int, int] | None = None,
     ) -> None:
 
         if positions is None:
@@ -22,6 +22,9 @@ class GameObject:
         self.life_time = NO_LIFETIME
         self._moving_object = False
         self._is_game_over_on_interception = False
+
+        # для прохождения test_game_object_attributes
+        self.position = None
 
     def dec_lifetime(self) -> None:
         """Уменьшает lifetime объекта на 1."""

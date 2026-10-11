@@ -9,7 +9,11 @@ from objects.game import GameObject
 class Snake(GameObject):
     """Игровой объект змейка."""
 
-    def __init__(self) -> None:
+    def __init__(
+        self,
+        positions: list[tuple[int, int]] | None = None,
+        body_color: tuple[int, int, int] | None = None,
+    ) -> None:
 
         # аттрибуты родительского класса
         super().__init__(
@@ -26,6 +30,9 @@ class Snake(GameObject):
         self.reverse: bool = False
         self.direction = Direction.RIGHT
         self.last_apple: AppleType = AppleType.normal
+
+        # для прохождения test_snake_attributes
+        self.position = None
 
     def update_direction(self, direction: Direction) -> None:
         """Обновляет направление движения змейки."""

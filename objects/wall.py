@@ -6,8 +6,9 @@ class Wall(GameObject):
     """Игровой объект стена."""
 
     def __init__(
-            self,
-            positions: list[tuple[int, int]] | None,
+        self,
+        positions: list[tuple[int, int]] | None = None,
+        body_color: tuple[int, int, int] | None = None,
     ):
 
         if positions is not None:

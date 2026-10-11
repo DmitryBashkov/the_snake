@@ -1,0 +1,254 @@
+============================= test session starts ==============================
+platform linux -- Python 3.13.5, pytest-9.1.1, pluggy-1.6.0 -- /home/pitpiwpiw/Documents/the_snake/venv/bin/python
+rootdir: /home/pitpiwpiw/Documents/the_snake
+configfile: pytest.ini
+plugins: timeout-2.4.0
+collecting ... collected 37 items
+
+tests/test_code_structure.py::test_game_object_attributes[position] ERROR [  2%]
+tests/test_code_structure.py::test_game_object_attributes[body_color] ERROR [  5%]
+tests/test_code_structure.py::test_game_object_attributes[draw] ERROR    [  8%]
+tests/test_code_structure.py::test_apple_inherits_from_game_object PASSED [ 10%]
+tests/test_code_structure.py::test_apple_attributes[position] ERROR      [ 13%]
+tests/test_code_structure.py::test_apple_attributes[body_color] ERROR    [ 16%]
+tests/test_code_structure.py::test_apple_attributes[draw] ERROR          [ 18%]
+tests/test_code_structure.py::test_apple_attributes[randomize_position] ERROR [ 21%]
+tests/test_code_structure.py::test_snake_inherits_from_game_object PASSED [ 24%]
+tests/test_code_structure.py::test_snake_attributes[position] FAILED     [ 27%]
+tests/test_code_structure.py::test_snake_attributes[body_color] PASSED   [ 29%]
+tests/test_code_structure.py::test_snake_attributes[positions] PASSED    [ 32%]
+tests/test_code_structure.py::test_snake_attributes[direction] PASSED    [ 35%]
+tests/test_code_structure.py::test_snake_attributes[draw] PASSED         [ 37%]
+tests/test_code_structure.py::test_snake_attributes[get_head_position] PASSED [ 40%]
+tests/test_code_structure.py::test_snake_attributes[move] PASSED         [ 43%]
+tests/test_code_structure.py::test_snake_attributes[reset] PASSED        [ 45%]
+tests/test_code_structure.py::test_snake_attributes[update_direction] PASSED [ 48%]
+tests/test_code_structure.py::test_elements_exist[SCREEN_WIDTH] PASSED   [ 51%]
+tests/test_code_structure.py::test_elements_exist[SCREEN_HEIGHT] PASSED  [ 54%]
+tests/test_code_structure.py::test_elements_exist[GRID_SIZE] PASSED      [ 56%]
+tests/test_code_structure.py::test_elements_exist[GRID_WIDTH] PASSED     [ 59%]
+tests/test_code_structure.py::test_elements_exist[GRID_HEIGHT] PASSED    [ 62%]
+tests/test_code_structure.py::test_elements_exist[BOARD_BACKGROUND_COLOR] PASSED [ 64%]
+tests/test_code_structure.py::test_elements_exist[UP] FAILED             [ 67%]
+tests/test_code_structure.py::test_elements_exist[DOWN] FAILED           [ 70%]
+tests/test_code_structure.py::test_elements_exist[LEFT] FAILED           [ 72%]
+tests/test_code_structure.py::test_elements_exist[RIGHT] FAILED          [ 75%]
+tests/test_code_structure.py::test_elements_exist[screen] PASSED         [ 78%]
+tests/test_code_structure.py::test_elements_exist[clock] PASSED          [ 81%]
+tests/test_code_structure.py::test_elements_exist[main] PASSED           [ 83%]
+tests/test_code_structure.py::test_elements_exist[handle_keys] FAILED    [ 86%]
+tests/test_code_structure.py::test_vars_type[Surface-screen] PASSED      [ 89%]
+tests/test_code_structure.py::test_vars_type[Clock-clock] PASSED         [ 91%]
+tests/test_code_structure.py::test_vars_are_functions[handle_keys] FAILED [ 94%]
+tests/test_code_structure.py::test_vars_are_functions[main] PASSED       [ 97%]
+tests/test_main.py::test_main_run_without_exceptions PASSED              [100%]
+
+==================================== ERRORS ====================================
+___________ ERROR at setup of test_game_object_attributes[position] ____________
+tests/conftest.py:77: in _create_game_object
+    return getattr(module, class_name)()
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   TypeError: GameObject.__init__() missing 2 required positional arguments: 'positions' and 'body_color'
+
+During handling of the above exception, another exception occurred:
+tests/conftest.py:91: in game_object
+    return _create_game_object('GameObject', _the_snake)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests/conftest.py:79: in _create_game_object
+    raise AssertionError(
+E   AssertionError: При создании объекта класса `GameObject` произошла ошибка:
+E   `TypeError: GameObject.__init__() missing 2 required positional arguments: 'positions' and 'body_color'`
+E   Если в конструктор класса `GameObject` помимо параметра `self` передаются какие-то ещё параметры - убедитесь, что для них установлены значения по умолчанию. Например:
+E   `def __init__(self, <параметр>=<значение_по_умолчанию>):`
+__________ ERROR at setup of test_game_object_attributes[body_color] ___________
+tests/conftest.py:77: in _create_game_object
+    return getattr(module, class_name)()
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   TypeError: GameObject.__init__() missing 2 required positional arguments: 'positions' and 'body_color'
+
+During handling of the above exception, another exception occurred:
+tests/conftest.py:91: in game_object
+    return _create_game_object('GameObject', _the_snake)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests/conftest.py:79: in _create_game_object
+    raise AssertionError(
+E   AssertionError: При создании объекта класса `GameObject` произошла ошибка:
+E   `TypeError: GameObject.__init__() missing 2 required positional arguments: 'positions' and 'body_color'`
+E   Если в конструктор класса `GameObject` помимо параметра `self` передаются какие-то ещё параметры - убедитесь, что для них установлены значения по умолчанию. Например:
+E   `def __init__(self, <параметр>=<значение_по_умолчанию>):`
+_____________ ERROR at setup of test_game_object_attributes[draw] ______________
+tests/conftest.py:77: in _create_game_object
+    return getattr(module, class_name)()
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   TypeError: GameObject.__init__() missing 2 required positional arguments: 'positions' and 'body_color'
+
+During handling of the above exception, another exception occurred:
+tests/conftest.py:91: in game_object
+    return _create_game_object('GameObject', _the_snake)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests/conftest.py:79: in _create_game_object
+    raise AssertionError(
+E   AssertionError: При создании объекта класса `GameObject` произошла ошибка:
+E   `TypeError: GameObject.__init__() missing 2 required positional arguments: 'positions' and 'body_color'`
+E   Если в конструктор класса `GameObject` помимо параметра `self` передаются какие-то ещё параметры - убедитесь, что для них установлены значения по умолчанию. Например:
+E   `def __init__(self, <параметр>=<значение_по_умолчанию>):`
+______________ ERROR at setup of test_apple_attributes[position] _______________
+tests/conftest.py:77: in _create_game_object
+    return getattr(module, class_name)()
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   TypeError: Apple.__init__() missing 1 required positional argument: 'positions'
+
+During handling of the above exception, another exception occurred:
+tests/conftest.py:101: in apple
+    return _create_game_object('Apple', _the_snake)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests/conftest.py:79: in _create_game_object
+    raise AssertionError(
+E   AssertionError: При создании объекта класса `Apple` произошла ошибка:
+E   `TypeError: Apple.__init__() missing 1 required positional argument: 'positions'`
+E   Если в конструктор класса `Apple` помимо параметра `self` передаются какие-то ещё параметры - убедитесь, что для них установлены значения по умолчанию. Например:
+E   `def __init__(self, <параметр>=<значение_по_умолчанию>):`
+_____________ ERROR at setup of test_apple_attributes[body_color] ______________
+tests/conftest.py:77: in _create_game_object
+    return getattr(module, class_name)()
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   TypeError: Apple.__init__() missing 1 required positional argument: 'positions'
+
+During handling of the above exception, another exception occurred:
+tests/conftest.py:101: in apple
+    return _create_game_object('Apple', _the_snake)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests/conftest.py:79: in _create_game_object
+    raise AssertionError(
+E   AssertionError: При создании объекта класса `Apple` произошла ошибка:
+E   `TypeError: Apple.__init__() missing 1 required positional argument: 'positions'`
+E   Если в конструктор класса `Apple` помимо параметра `self` передаются какие-то ещё параметры - убедитесь, что для них установлены значения по умолчанию. Например:
+E   `def __init__(self, <параметр>=<значение_по_умолчанию>):`
+________________ ERROR at setup of test_apple_attributes[draw] _________________
+tests/conftest.py:77: in _create_game_object
+    return getattr(module, class_name)()
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   TypeError: Apple.__init__() missing 1 required positional argument: 'positions'
+
+During handling of the above exception, another exception occurred:
+tests/conftest.py:101: in apple
+    return _create_game_object('Apple', _the_snake)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests/conftest.py:79: in _create_game_object
+    raise AssertionError(
+E   AssertionError: При создании объекта класса `Apple` произошла ошибка:
+E   `TypeError: Apple.__init__() missing 1 required positional argument: 'positions'`
+E   Если в конструктор класса `Apple` помимо параметра `self` передаются какие-то ещё параметры - убедитесь, что для них установлены значения по умолчанию. Например:
+E   `def __init__(self, <параметр>=<значение_по_умолчанию>):`
+_________ ERROR at setup of test_apple_attributes[randomize_position] __________
+tests/conftest.py:77: in _create_game_object
+    return getattr(module, class_name)()
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   TypeError: Apple.__init__() missing 1 required positional argument: 'positions'
+
+During handling of the above exception, another exception occurred:
+tests/conftest.py:101: in apple
+    return _create_game_object('Apple', _the_snake)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests/conftest.py:79: in _create_game_object
+    raise AssertionError(
+E   AssertionError: При создании объекта класса `Apple` произошла ошибка:
+E   `TypeError: Apple.__init__() missing 1 required positional argument: 'positions'`
+E   Если в конструктор класса `Apple` помимо параметра `self` передаются какие-то ещё параметры - убедитесь, что для них установлены значения по умолчанию. Например:
+E   `def __init__(self, <параметр>=<значение_по_умолчанию>):`
+=================================== FAILURES ===================================
+_______________________ test_snake_attributes[position] ________________________
+tests/test_code_structure.py:74: in test_snake_attributes
+    assert hasattr(snake, attr_name), (
+E   AssertionError: Убедитесь, что у объектов класса `Snake` определен атрибут `position`.
+E   assert False
+E    +  where False = hasattr(<objects.snake.Snake object at 0x7f42c073d400>, 'position')
+___________________________ test_elements_exist[UP] ____________________________
+tests/test_code_structure.py:104: in test_elements_exist
+    assert hasattr(_the_snake, element_name), (
+E   AssertionError: Убедитесь, что в модуле `the_snake` определена константа `UP`.
+E   assert False
+E    +  where False = hasattr(<module 'the_snake' from '/home/pitpiwpiw/Documents/the_snake/the_snake.py'>, 'UP')
+__________________________ test_elements_exist[DOWN] ___________________________
+tests/test_code_structure.py:104: in test_elements_exist
+    assert hasattr(_the_snake, element_name), (
+E   AssertionError: Убедитесь, что в модуле `the_snake` определена константа `DOWN`.
+E   assert False
+E    +  where False = hasattr(<module 'the_snake' from '/home/pitpiwpiw/Documents/the_snake/the_snake.py'>, 'DOWN')
+__________________________ test_elements_exist[LEFT] ___________________________
+tests/test_code_structure.py:104: in test_elements_exist
+    assert hasattr(_the_snake, element_name), (
+E   AssertionError: Убедитесь, что в модуле `the_snake` определена константа `LEFT`.
+E   assert False
+E    +  where False = hasattr(<module 'the_snake' from '/home/pitpiwpiw/Documents/the_snake/the_snake.py'>, 'LEFT')
+__________________________ test_elements_exist[RIGHT] __________________________
+tests/test_code_structure.py:104: in test_elements_exist
+    assert hasattr(_the_snake, element_name), (
+E   AssertionError: Убедитесь, что в модуле `the_snake` определена константа `RIGHT`.
+E   assert False
+E    +  where False = hasattr(<module 'the_snake' from '/home/pitpiwpiw/Documents/the_snake/the_snake.py'>, 'RIGHT')
+_______________________ test_elements_exist[handle_keys] _______________________
+tests/test_code_structure.py:104: in test_elements_exist
+    assert hasattr(_the_snake, element_name), (
+E   AssertionError: Убедитесь, что в модуле `the_snake` определена функция `handle_keys`.
+E   assert False
+E    +  where False = hasattr(<module 'the_snake' from '/home/pitpiwpiw/Documents/the_snake/the_snake.py'>, 'handle_keys')
+_____________________ test_vars_are_functions[handle_keys] _____________________
+tests/test_code_structure.py:129: in test_vars_are_functions
+    assert callable(getattr(_the_snake, func_name, None)), (
+E   AssertionError: Убедитесь, что переменная `handle_keys` - это функция.
+E   assert False
+E    +  where False = callable(None)
+E    +    where None = getattr(<module 'the_snake' from '/home/pitpiwpiw/Documents/the_snake/the_snake.py'>, 'handle_keys', None)
+=========================== short test summary info ============================
+FAILED tests/test_code_structure.py::test_snake_attributes[position] - AssertionError: Убедитесь, что у объектов класса `Snake` определен атрибут `position`.
+assert False
+ +  where False = hasattr(<objects.snake.Snake object at 0x7f42c073d400>, 'position')
+FAILED tests/test_code_structure.py::test_elements_exist[UP] - AssertionError: Убедитесь, что в модуле `the_snake` определена константа `UP`.
+assert False
+ +  where False = hasattr(<module 'the_snake' from '/home/pitpiwpiw/Documents/the_snake/the_snake.py'>, 'UP')
+FAILED tests/test_code_structure.py::test_elements_exist[DOWN] - AssertionError: Убедитесь, что в модуле `the_snake` определена константа `DOWN`.
+assert False
+ +  where False = hasattr(<module 'the_snake' from '/home/pitpiwpiw/Documents/the_snake/the_snake.py'>, 'DOWN')
+FAILED tests/test_code_structure.py::test_elements_exist[LEFT] - AssertionError: Убедитесь, что в модуле `the_snake` определена константа `LEFT`.
+assert False
+ +  where False = hasattr(<module 'the_snake' from '/home/pitpiwpiw/Documents/the_snake/the_snake.py'>, 'LEFT')
+FAILED tests/test_code_structure.py::test_elements_exist[RIGHT] - AssertionError: Убедитесь, что в модуле `the_snake` определена константа `RIGHT`.
+assert False
+ +  where False = hasattr(<module 'the_snake' from '/home/pitpiwpiw/Documents/the_snake/the_snake.py'>, 'RIGHT')
+FAILED tests/test_code_structure.py::test_elements_exist[handle_keys] - AssertionError: Убедитесь, что в модуле `the_snake` определена функция `handle_keys`.
+assert False
+ +  where False = hasattr(<module 'the_snake' from '/home/pitpiwpiw/Documents/the_snake/the_snake.py'>, 'handle_keys')
+FAILED tests/test_code_structure.py::test_vars_are_functions[handle_keys] - AssertionError: Убедитесь, что переменная `handle_keys` - это функция.
+assert False
+ +  where False = callable(None)
+ +    where None = getattr(<module 'the_snake' from '/home/pitpiwpiw/Documents/the_snake/the_snake.py'>, 'handle_keys', None)
+ERROR tests/test_code_structure.py::test_game_object_attributes[position] - AssertionError: При создании объекта класса `GameObject` произошла ошибка:
+`TypeError: GameObject.__init__() missing 2 required positional arguments: 'positions' and 'body_color'`
+Если в конструктор класса `GameObject` помимо параметра `self` передаются какие-то ещё параметры - убедитесь, что для них установлены значения по умолчанию. Например:
+`def __init__(self, <параметр>=<значение_по_умолчанию>):`
+ERROR tests/test_code_structure.py::test_game_object_attributes[body_color] - AssertionError: При создании объекта класса `GameObject` произошла ошибка:
+`TypeError: GameObject.__init__() missing 2 required positional arguments: 'positions' and 'body_color'`
+Если в конструктор класса `GameObject` помимо параметра `self` передаются какие-то ещё параметры - убедитесь, что для них установлены значения по умолчанию. Например:
+`def __init__(self, <параметр>=<значение_по_умолчанию>):`
+ERROR tests/test_code_structure.py::test_game_object_attributes[draw] - AssertionError: При создании объекта класса `GameObject` произошла ошибка:
+`TypeError: GameObject.__init__() missing 2 required positional arguments: 'positions' and 'body_color'`
+Если в конструктор класса `GameObject` помимо параметра `self` передаются какие-то ещё параметры - убедитесь, что для них установлены значения по умолчанию. Например:
+`def __init__(self, <параметр>=<значение_по_умолчанию>):`
+ERROR tests/test_code_structure.py::test_apple_attributes[position] - AssertionError: При создании объекта класса `Apple` произошла ошибка:
+`TypeError: Apple.__init__() missing 1 required positional argument: 'positions'`
+Если в конструктор класса `Apple` помимо параметра `self` передаются какие-то ещё параметры - убедитесь, что для них установлены значения по умолчанию. Например:
+`def __init__(self, <параметр>=<значение_по_умолчанию>):`
+ERROR tests/test_code_structure.py::test_apple_attributes[body_color] - AssertionError: При создании объекта класса `Apple` произошла ошибка:
+`TypeError: Apple.__init__() missing 1 required positional argument: 'positions'`
+Если в конструктор класса `Apple` помимо параметра `self` передаются какие-то ещё параметры - убедитесь, что для них установлены значения по умолчанию. Например:
+`def __init__(self, <параметр>=<значение_по_умолчанию>):`
+ERROR tests/test_code_structure.py::test_apple_attributes[draw] - AssertionError: При создании объекта класса `Apple` произошла ошибка:
+`TypeError: Apple.__init__() missing 1 required positional argument: 'positions'`
+Если в конструктор класса `Apple` помимо параметра `self` передаются какие-то ещё параметры - убедитесь, что для них установлены значения по умолчанию. Например:
+`def __init__(self, <параметр>=<значение_по_умолчанию>):`
+ERROR tests/test_code_structure.py::test_apple_attributes[randomize_position] - AssertionError: При создании объекта класса `Apple` произошла ошибка:
+`TypeError: Apple.__init__() missing 1 required positional argument: 'positions'`
+Если в конструктор класса `Apple` помимо параметра `self` передаются какие-то ещё параметры - убедитесь, что для них установлены значения по умолчанию. Например:
+`def __init__(self, <параметр>=<значение_по_умолчанию>):`
+==================== 7 failed, 23 passed, 7 errors in 0.57s ====================
