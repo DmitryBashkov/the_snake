@@ -144,6 +144,9 @@ class Game:
 
     def handle_keys(self, key: int):
         """Обработчик нажатия кнопок."""
+        if key == pygame.K_ESCAPE:
+            self.stop()
+
         direction = Direction.from_keys(key)
 
         if direction:
